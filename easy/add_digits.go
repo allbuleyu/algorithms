@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"math"
 )
 
 func main() {
 	// fmt.Println(addDigits(100))
 	// fmt.Println(isHappy(7))
 
-	fmt.Println(isUgly(8))
+	fmt.Println(nthUglyNumber(20))
 }
 
 // Given a non-negative integer num, repeatedly add all its digits until the result has only one digit.
@@ -87,18 +88,62 @@ func isUgly(num int) bool {
 		return false
 	}
 
-	for num >= 2 {
-		switch {
-		case num%2 == 0:
-			num /= 2
-		case num%3 == 0:
-			num /= 3
-		case num%5 == 0:
-			num /= 5
-		default:
-			return false
+	// for num >= 2 {
+	// 	switch {
+	// 	case num%2 == 0:
+	// 		num /= 2
+	// 	case num%3 == 0:
+	// 		num /= 3
+	// 	case num%5 == 0:
+	// 		num /= 5
+	// 	default:
+	// 		return false
+	// 	}
+	// }
+
+	arr := [3]int{2, 3, 5}
+	for _, i := range arr {
+
+		for num%i == 0 {
+			num /= i
+		}
+
+		if num == 1 {
+			return true
 		}
 	}
 
-	return true
+	return false
+}
+
+func nthUglyNumber(n int) int {
+	if n <= 0 {
+		return 0
+	}
+
+	if n == 1 {
+		return 1
+	}
+
+	var ugly2, ugly3, ugly5 int
+	var result [1690]float64
+	result[0] = 1
+
+	for i := 1; i < n; i++ {
+		result[i] = math.Min(result[ugly2]*2, math.Min(result[ugly3]*3, result[ugly5]*5))
+
+		if result[i] == result[ugly2]*2 {
+			ugly2++
+		}
+
+		if result[i] == result[ugly3]*3 {
+			ugly3++
+		}
+
+		if result[i] == result[ugly5]*5 {
+			ugly5++
+		}
+	}
+
+	return int(result[n-1])
 }
