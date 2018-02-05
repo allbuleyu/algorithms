@@ -6,22 +6,13 @@
 // Output: 4
 // Explanation: n is 2, and the maximum sum of pairs is 4
 //
-package main
+package easy
 
 import (
 	"fmt"
 	"sort"
 )
 
-func main() {
-	// arr := []int{0, 1, 0, 3, 12}
-	// arr1 := arr[0:]
-
-	// fmt.Println(arrayPairSum(arr))
-	// fmt.Printf("%#v %#v \n", arr[0:], arr)
-	s := "DCXXI"
-	fmt.Println(romanToInt(s))
-}
 
 func arrayPairSum(nums []int) int {
 	sum := 0

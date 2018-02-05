@@ -1,13 +1,5 @@
-package main
+package easy
 
-import (
-	"fmt"
-	// "strconv"
-)
-
-func main() {
-	fmt.Println(getSum(100, 201))
-}
 
 func getSum(a int, b int) int {
 	if b == 0 {

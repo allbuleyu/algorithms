@@ -1,16 +1,10 @@
-package main
+package easy
 
 import (
 	"fmt"
 	"math"
 )
 
-func main() {
-	// fmt.Println(addDigits(100))
-	// fmt.Println(isHappy(7))
-
-	fmt.Println(nthUglyNumber(20))
-}
 
 // Given a non-negative integer num, repeatedly add all its digits until the result has only one digit.
 

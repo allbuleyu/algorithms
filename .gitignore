@@ -42,3 +42,6 @@ local.properties
 Runtime
 *.DS_Store
 
+# idea
+.idea
+

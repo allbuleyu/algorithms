@@ -18,7 +18,7 @@
 
 // The above arrows point to positions where the corresponding bits are different.
 
-package main
+package easy
 
 import (
 	"fmt"
