@@ -1,6 +1,10 @@
 package easy
 
-import "fmt"
+import (
+
+	"sort"
+
+)
 
 //https://leetcode.com/problems/first-unique-character-in-a-string/description/
 //Given a string, find the first non-repeating character in it and return it's index. If it doesn't exist, return -1.
@@ -72,13 +76,34 @@ func FirstUniqChar(s string) int {
 func frequencySort(s string) string {
 	var Charcnt [256]int
 	for _, c := range s {
-		fmt.Println(int(c), string(byte(int(c))))
+
 		Charcnt[int(c)]++
 	}
 
-	fmt.Println(Charcnt)
+	sortArr := make([]int, 0)
+	for _, num := range Charcnt {
+		if num != 0 {
+			sortArr = append(sortArr, num)
+		}
 
-	return ""
+	}
+
+	sort.Sort(sort.Reverse(sort.IntSlice(sortArr)))
+
+	var str string
+	//for c := range Charcnt {
+	//	for _, num := range sortArr {
+	//		if Charcnt[c] == num {
+	//			for i:= 0; i<num; i++ {
+	//				str += string(byte(c))
+	//			}
+	//		}
+	//	}
+	//
+	//}
+
+
+	return str
 }
 
 func FrequencySort(s string) string {
