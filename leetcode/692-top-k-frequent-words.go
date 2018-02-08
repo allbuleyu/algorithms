@@ -1,5 +1,7 @@
 package leetcode
 
+import "sort"
+
 //https://leetcode.com/problems/top-k-frequent-words/description/
 //Given a non-empty list of words, return the k most frequent elements.
 //
@@ -20,7 +22,56 @@ package leetcode
 //Input words contain only lowercase letters.
 //Follow up:
 //Try to solve it in O(n log k) time and O(n) extra space.
-
+// next challenge 438, 508
 func topKFrequentStr(words []string, k int) []string {
-	return []string{}
+	m := make(map[string]int)
+	for i := range words {
+		m[words[i]]++
+	}
+
+	fr := make([][]string, len(words) + 1)
+	for i, v := range m {
+		fr[v] = append(fr[v], i)
+	}
+
+	r := make([]string, 0, k)
+	for i := len(fr)-1; i >= 0; i-- {
+		sort.Sort(wordStrings(fr[i]))
+		r = append(r, fr[i]...)
+		if len(r) >= k {
+			return r[:k]
+		}
+	}
+
+	return r
 }
+
+func TopKFrequentStr(words []string, k int) []string {
+	return topKFrequentStr(words, k)
+}
+
+type wordStrings []string
+
+func (s wordStrings) Len() int { return len(s) }
+
+func (s wordStrings) Less(i, j int) bool {
+	var l int
+	if len(s[i]) > len(s[j]) {
+		l = len(s[j])
+	}else {
+		l = len(s[i])
+	}
+
+	for k := 0; k < l; k++ {
+		if s[i][k] < s[j][k] {
+			return true
+		}else if s[i][k] > s[j][k] {
+			return false
+		}
+	}
+
+	return len(s[i]) < len(s[j])
+}
+
+func (s wordStrings) Swap(i, j int) { s[i], s[j] = s[j], s[i] }
+

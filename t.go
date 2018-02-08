@@ -13,10 +13,10 @@ func main() {
 	//	}
 	//}
 
-	intSlice := []int{1,1,1,2,2,3}
+	//intSlice := []int{3,2,1,5,6,4}
+	//
+	//fmt.Println(leetcode.FindKthLargest(intSlice, 2), "i" < "love"[:1], "love"[:1])
 
-	fmt.Println(leetcode.TopKFrequent(intSlice, 2))
-	return
-
-	fmt.Println(leetcode.FrequencySort("leetcode"), 'z'+1)
+	words := []string{"the", "day", "is", "sunny", "the", "the", "the", "sunny", "is", "is"}
+	fmt.Println(leetcode.TopKFrequentStr(words, 4), "i" < "love")
 }

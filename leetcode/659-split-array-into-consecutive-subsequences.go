@@ -24,5 +24,34 @@ package leetcode
 //The length of the input is in range of [1, 10000]
 
 func isPossible(nums []int) bool {
-	return false
+	var size int = nums[len(nums) - 1] + 1
+	var intNum [size]int
+	var maxSplitSize int
+	for i := range nums {
+		intNum[nums[i]]++
+		if intNum[nums[i]] > maxSplitSize {
+			maxSplitSize = intNum[nums[i]]
+		}
+	}
+
+	splitSlice := make([][]int, maxSplitSize)
+
+	for i, v := range intNum {
+		if i == 0 {
+			continue
+		}
+
+		for j := 0; j < v; j++ {
+			splitSlice[j] = append(splitSlice[j], i)
+		}
+
+	}
+
+	for i := range splitSlice {
+		if len(splitSlice[i]) < 3 {
+			return false
+		}
+	}
+
+	return true
 }

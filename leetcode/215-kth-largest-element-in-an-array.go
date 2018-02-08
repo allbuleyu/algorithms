@@ -1,5 +1,7 @@
 package leetcode
 
+import "sort"
+
 //https://leetcode.com/problems/kth-largest-element-in-an-array/description/
 //Find the kth largest element in an unsorted array. Note that it is the kth largest element in the sorted order, not the kth distinct element.
 //For example,
@@ -10,7 +12,17 @@ package leetcode
 //
 //Credits:
 //Special thanks to @mithmatt for adding this problem and creating all test cases.
-
+//Next challenge 324, 414
 func findKthLargest(nums []int, k int) int {
-	return 123
+	sort.Sort(sort.Reverse(sort.IntSlice(nums)))
+
+	return nums[k-1]
+
+	// plan 2
+	//sort.Ints(nums)
+	//return nums[len(nums)-k]
+}
+
+func FindKthLargest(nums []int, k int) int {
+	return findKthLargest(nums, k)
 }
