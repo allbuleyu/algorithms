@@ -23,21 +23,72 @@ import (
 //
 //Credits:
 //Special thanks to @dietpepsi for adding this problem and creating all test cases.
-
+//Next challenge 75
 func wiggleSort(nums []int)  {
-	var splitLen1 int
-	if len(nums) % 2 == 0 {
-		splitLen1 = len(nums)/2
-	}else {
-		splitLen1 = (len(nums)+1)/2
+	sorted := sort.IsSorted(sort.IntSlice(nums))
+	if !sorted {
+		sort.Ints(nums)
 	}
 
-	sorted := sort.IsSorted(sort.IntSlice(nums))
+	cp := make([]int, len(nums))
+	copy(cp, nums)
 
+	left, right := (len(nums) + 1) / 2 - 1, len(nums) - 1
+	for i := range nums {
+		if i % 2 == 0 {
+			nums[i] = cp[left]
+			left--
+		}else {
+			nums[i] = cp[right]
+			right--
+		}
+	}
+}
 
+type ss []int
+func(n ss)Less(i,j int)bool{
+	return n[i]<n[j]
+}
+func(n ss)Swap(i,j int){
+	n[i],n[j] = n[j],n[i]
+}
+func (n ss)Len()int{
+	return len(n)
+}
+func wiggleSort1(nums []int){
+	t := make(ss,len(nums))
+	for i:=0;i<len(t);i++{
+		t[i] = nums[i]
+	}
+	sort.Sort(t)
+	j:=len(nums) -1
+	for i:=1;i<len(nums);i,j=i+2,j-1{
+		nums[i] = t[j]
+	}
+	for i:=0;i<len(nums);i,j=i+2,j-1{
+		nums[i] = t[j]
+	}
 
 }
 
-func WiggleSort(nums []int)  {
+func wiggleSort2(nums []int)  {
+	if len(nums) < 2 { return }
+	newNums := make([]int, len(nums))
+	copy(newNums, nums)
+	sort.Ints(newNums)
+	l, r := (len(nums) + 1) / 2 - 1, len(nums) - 1
+	for i := 0; i < len(nums); i++ {
+		if i % 2 == 0 {
+			nums[i] = newNums[l]
+			l--
+		} else {
+			nums[i] = newNums[r]
+			r--
+		}
+	}
+}
+
+func WiggleSort(nums []int) []int {
 	wiggleSort(nums)
+	return nums
 }

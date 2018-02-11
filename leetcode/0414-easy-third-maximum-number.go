@@ -1,5 +1,7 @@
 package leetcode
 
+import "sort"
+
 //https://leetcode.com/problems/third-maximum-number/description/
 //Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number. The time complexity must be in O(n).
 //
@@ -25,5 +27,51 @@ package leetcode
 //
 //difficult: easy
 func thirdMax(nums []int) int {
-	return 1
+	m := make(map[int]int)
+	for i := range nums {
+		m[nums[i]]++
+	}
+
+	if len(m) < 3 {
+		sort.Ints(nums)
+		return nums[len(nums)-1]
+	}
+
+	r := make([]int, 0)
+	for i := range m {
+		r = append(r, i)
+	}
+
+	sort.Ints(r)
+	return r[len(r) -  3]
+}
+
+func thirdMax1(nums []int) int {
+	const kMax = 3
+	hasValue := [kMax]bool{}
+	maxValue := [kMax]int{}
+	for _, v := range nums {
+		for i := 0; i < kMax; i++ {
+			if hasValue[i] {
+				if v == maxValue[i] {
+					break
+				}
+				if v > maxValue[i] {
+					v, maxValue[i] = maxValue[i], v
+				}
+			} else {
+				maxValue[i] = v
+				hasValue[i] = true
+				break
+			}
+		}
+	}
+	if hasValue[kMax-1] {
+		return maxValue[kMax-1]
+	}
+	return maxValue[0]
+}
+
+func ThirdMax(nums []int) int {
+	return thirdMax(nums)
 }
