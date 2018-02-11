@@ -1,6 +1,5 @@
 package leetcode
 
-import "math"
 
 //https://leetcode.com/problems/split-array-into-consecutive-subsequences/description/
 //You are given an integer array sorted in ascending order (may contain duplicates), you need to split them into several subsequences, where each subsequences consist of at least 3 consecutive integers. Return whether you can make such a split.
@@ -26,66 +25,43 @@ import "math"
 //The length of the input is in range of [1, 10000]
 //Next challenge hard(45,295,778)
 func isPossible(nums []int) bool {
-	firstEle := nums[0]
-	lastEle := nums[len(nums) - 1]
-	var size int
+	firstEle := abs(nums[0])
+	lastEle := abs(nums[len(nums) - 1])
 
-	if math.Abs(float64(firstEle)) > math.Abs(float64(lastEle)) {
-		size = int(math.Abs(float64(firstEle))) + 1
-	}else {
-		size = int(math.Abs(float64(lastEle))) + 1
+	var size int = lastEle
+	if firstEle > lastEle {
+		size = firstEle
 	}
-	intNum := make([]int, size)
 
-	var maxSplitSize int
+	fr := make([]int, size+1)
+	group := make([]int, size + 1)
+
 	for i := range nums {
-		v := nums[i]
-		if nums[i] < 0 {
-			v = -nums[i]
-		}
-
-		intNum[v]++
-
-		if intNum[v] > maxSplitSize {
-			maxSplitSize = intNum[v]
-		}
+		fr[abs(nums[i])]++
 	}
 
-	splitSlice := make([][]int, maxSplitSize)
-
-	max := 0
-	for i, v := range intNum {
-		if i == 0 {
+	for i := range nums {
+		v := abs(nums[i])
+		if fr[v] == 0 {
 			continue
 		}
 
-		if max < v {
-			max = v
+		fr[v]--
+		if group[v-1] != 0 {
+			group[v-1]--
+			group[v]++
+			continue
 		}
 
-		for j := 0; j < v; j++ {
-			if v < max {
-				splitSlice[max-v] = append(splitSlice[max-v], i)
-				l := len(splitSlice[max-v])
-				if l > 1 && (abs(splitSlice[max-v][l-1]) - abs(splitSlice[max-v][l-2])) != 1 {
-					return false
-				}
-			}else {
-				splitSlice[j] = append(splitSlice[j], i)
-				l := len(splitSlice[j])
-				if l > 1 && (abs(splitSlice[j][l-1]) - abs(splitSlice[j][l-2])) != 1 {
-					return false
-				}
-			}
-		}
-
-	}
-
-	for i := range splitSlice {
-		if len(splitSlice[i]) < 3 {
+		if fr[v+1] != 0 && fr[v+2] != 0 {
+			fr[v+1]--
+			fr[v+2]--
+			group[v+2]++
+		}else {
 			return false
 		}
 	}
+
 
 	return true
 }
@@ -131,5 +107,5 @@ func abs(x int) int {
 }
 
 func IsPossible(nums []int) bool {
-	return isPossible1(nums)
+	return isPossible(nums)
 }

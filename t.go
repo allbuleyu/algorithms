@@ -13,7 +13,9 @@ func main() {
 	//	}
 	//}
 
-	intSlice := []int{1,2,3,4,5,5,6,7,8,9,10,11}
+	intSlice := []int{1,5,1,1,6,4}
+	leetcode.WiggleSort(intSlice)
+	return
 	//
 	fmt.Println(leetcode.IsPossible(intSlice))
 
