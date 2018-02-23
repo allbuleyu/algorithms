@@ -12,9 +12,10 @@ func main() {
 	//		intSlice = append(intSlice, i)
 	//	}
 	//}
-
+	fmt.Println(byte('z'), byte('Z'))
+	return
 	//intSlice := []int{4,5,5,6}
-	intSlice := []int{2,1,3,4,5,4, 7}
+	intSlice := []int{2,1,5,6,2,3}
 	fmt.Println(leetcode.LargestRectangleArea(intSlice))
 	return
 	//

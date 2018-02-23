@@ -1,5 +1,6 @@
 package leetcode
 
+
 //https://leetcode.com/problems/largest-rectangle-in-histogram/description/
 //Given n non-negative integers representing the histogram's bar height where the width of each bar is 1, find the area of largest rectangle in the histogram.
 //
@@ -12,8 +13,8 @@ package leetcode
 //For example,
 //Given heights = [2,1,5,6,2,3],
 //return 10.
-
-func largestRectangleArea(heights []int) int {
+// next challenge 85
+func largestRectangleAreaOld(heights []int) int {
 	m := make(map[int]int)
 	maxArea := 0
 	for i := range heights {
@@ -40,6 +41,63 @@ func largestRectangleArea(heights []int) int {
 	}
 
 	return maxArea
+}
+
+func largestRectangleArea(heights []int) int {
+	lessLen := 1
+	maxArea := 0
+	slice := make([]int, 0)
+	for i := range heights {
+		if i == 0 {
+			slice = append(slice, heights[i])
+			continue
+		}
+		Outer:
+		for j := len(slice) - 1; j >= 0;j-- {
+
+			if slice[j] > heights[i] {
+				max := slice[j] * lessLen
+				lessLen++
+				slice = slice[:j]
+
+				if max > maxArea {
+					maxArea = max
+				}
+
+			}else if slice[j] <= heights[i]{
+
+				if lessLen == 1 {
+					slice = append(slice, heights[i])
+					break Outer
+				}
+
+			}
+		}
+
+		if lessLen != 1 {
+			for k := 0; k < lessLen; k++ {
+				slice = append(slice, heights[i])
+
+			}
+			lessLen=1
+		}
+	}
+
+	for i := 0; i < len(slice); i++ {
+		max := slice[i] * (len(slice) - i)
+		if max > maxArea {
+			maxArea = max
+		}
+	}
+
+
+	return maxArea
+}
+
+func getSlice(slice *[]int, nums []int) {
+	if len(*slice) == 0 {
+		return
+	}
 }
 
 func LargestRectangleArea(heights []int) int {

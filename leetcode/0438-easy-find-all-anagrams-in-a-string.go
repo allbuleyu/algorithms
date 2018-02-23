@@ -32,5 +32,40 @@ package leetcode
 //The substring with start index = 2 is "ab", which is an anagram of "ab".
 //difficult easy
 func findAnagrams(s string, p string) []int {
-	return []int{}
+	var r, rc [123]int
+	for _, v := range p {
+		r[byte(v)]++
+	}
+	copy(r, rc)
+	numOfDeference := len(p)
+
+	res := make([]int, 0)
+	for left, right := 0,0; right < len(s); right++ {
+		v := s[right]
+
+		if r[byte(v)] == 0 {
+			left++
+			numOfDeference = len(p)
+			r = rc
+			continue
+		}
+
+		r[byte(v)]--
+		if s[byte(v)] >= 0 {
+			numOfDeference--
+		}
+
+		if numOfDeference == 0 {
+			res = append(res, left)
+			right = left
+		}
+
+
+	}
+
+	return res
+}
+
+func FindAnagrams(s string, p string) []int {
+	return findAnagrams(s, p)
 }
