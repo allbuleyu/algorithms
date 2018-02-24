@@ -1,5 +1,8 @@
 package leetcode
 
+//这个难度并不简单,应该算中等难度 567比这个还要简单些
+//
+//
 //https://leetcode.com/problems/find-all-anagrams-in-a-string/description/
 //Given a string s and a non-empty string p, find all the start indices of p's anagrams in s.
 //
@@ -30,7 +33,7 @@ package leetcode
 //The substring with start index = 0 is "ab", which is an anagram of "ab".
 //The substring with start index = 1 is "ba", which is an anagram of "ab".
 //The substring with start index = 2 is "ab", which is an anagram of "ab".
-//difficult easy 这个难度并不简单,应该算中等难度 567比这个还要简单些
+//difficult easy
 //next challenge 242,567
 func check(a,b,c [26]int) bool{
 	for i:=0;i<26;i++{

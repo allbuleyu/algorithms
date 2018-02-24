@@ -1,5 +1,10 @@
 package leetcode
 
+import (
+	"sort"
+	"strings"
+)
+
 //https://leetcode.com/problems/valid-anagram/description/
 //Given two strings s and t, write a function to determine if t is an anagram of s.
 //
@@ -33,7 +38,8 @@ func isAnagram1(s string, t string) bool {
 	return true
 }
 
-func isAnagram(s string, t string) bool {
+// hash table is fastest
+func isAnagram2(s string, t string) bool {
 	if len(s) != len(t) {
 		return  false
 	}
@@ -48,6 +54,19 @@ func isAnagram(s string, t string) bool {
 		if hs[v-'a'] < 0 {
 			return false
 		}
+	}
+
+	return true
+}
+
+// sorted string
+func isAnagram(s string, t string) bool {
+	sliceS := strings.Split(s, "")
+	sliceT := strings.Split(t, "")
+	sort.Strings(sliceS)
+	sort.Strings(sliceT)
+	if strings.Join(sliceS, "") != strings.Join(sliceT, "") {
+		return false
 	}
 
 	return true

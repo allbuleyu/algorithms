@@ -1,5 +1,10 @@
 package leetcode
 
+import (
+	"strings"
+	"sort"
+)
+
 //https://leetcode.com/problems/group-anagrams/description/
 //Given an array of strings, group anagrams together.
 //
@@ -14,5 +19,23 @@ package leetcode
 //Note: All inputs will be in lower-case.
 
 func groupAnagrams(strs []string) [][]string {
-	return [][]string{}
+	m := make(map[string][]string)
+	var ans [][]string
+	for _, v := range strs {
+		sv := strings.Split(v, "")
+		sort.Strings(sv)
+		key := strings.Join(sv, "")
+
+		m[key] = append(m[key], v)
+	}
+
+	for _, v := range m {
+		ans = append(ans, v)
+	}
+
+	return ans
+}
+
+func GroupAnagrams(strs []string) [][]string {
+	return groupAnagrams(strs)
 }

@@ -12,14 +12,15 @@ func main() {
 	//		intSlice = append(intSlice, i)
 	//	}
 	//}
-	s := "ab"
-	p := "eidboaoo"
-	fmt.Println(leetcode.CheckInclusion(s, p))
+
+	s := "cabwefgewcwaefgcf"
+	t := "cae"
+	fmt.Println(leetcode.MinWindow(s,t))
 	return
 
 	//intSlice := []int{4,5,5,6}
-	intSlice := []int{2,1,5,6,2,3}
-	fmt.Println(leetcode.LargestRectangleArea(intSlice))
+	intSlice := []int{2,3,1,2,4,3}
+	fmt.Println(leetcode.MinSubArrayLen(7, intSlice))
 	return
 	//
 	fmt.Println(leetcode.IsPossible(intSlice))
