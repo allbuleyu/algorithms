@@ -30,37 +30,81 @@ package leetcode
 //The substring with start index = 0 is "ab", which is an anagram of "ab".
 //The substring with start index = 1 is "ba", which is an anagram of "ab".
 //The substring with start index = 2 is "ab", which is an anagram of "ab".
-//difficult easy
-func findAnagrams(s string, p string) []int {
-	var r, rc [123]int
-	for _, v := range p {
-		r[byte(v)]++
+//difficult easy 这个难度并不简单,应该算中等难度 567比这个还要简单些
+//next challenge 242,567
+func check(a,b,c [26]int) bool{
+	for i:=0;i<26;i++{
+		if a[i]-b[i] != c[i]{
+			return false
+		}
 	}
-	copy(r, rc)
-	numOfDeference := len(p)
+	return true
+}
 
+func findAnagrams1(s string, p string) []int {
+	if len(s)<len(p){
+		return []int{}
+	}
+	ret := []int{}
+	start, end, mark := [26]int{},[26]int{},[26]int{}
+
+	var ck func(a,b,c [26]int) bool
+	ck = func(end, start, mark [26]int) bool {
+		for i:=0;i<26;i++{
+			if end[i]-start[i] != mark[i]{
+				return false
+			}
+		}
+		return true
+	}
+
+	for i:=0;i<len(p);i++{
+		mark[p[i]-'a'] ++
+	}
+	for i:=0;i<len(p);i++{
+		end[s[i]-'a'] ++
+	}
+	if ck(end, start, mark){
+		ret = append(ret,0)
+	}
+	for i:=len(p);i<len(s);i++{
+		start[s[i-len(p)]-'a'] ++
+		end[s[i]-'a']++
+		if ck(end,start,mark){
+			ret = append(ret,i-len(p)+1)
+		}
+	}
+	return ret
+}
+// 移动窗口
+func findAnagrams(s string, p string) []int {
+	hs := [256]int{}
+	start := 0
+	count := 0
 	res := make([]int, 0)
-	for left, right := 0,0; right < len(s); right++ {
-		v := s[right]
 
-		if r[byte(v)] == 0 {
-			left++
-			numOfDeference = len(p)
-			r = rc
-			continue
+	for _, v := range p {
+		hs[v]++
+		count++
+	}
+
+	for i, v := range s {
+		hs[v]--
+		if hs[v] >= 0 {
+			count--
 		}
 
-		r[byte(v)]--
-		if s[byte(v)] >= 0 {
-			numOfDeference--
+		if i - start >= len(p) {
+			hs[s[start]]++
+			if hs[s[start]] > 0 {
+				count++
+			}
+			start++
 		}
 
-		if numOfDeference == 0 {
-			res = append(res, left)
-			right = left
+		if count == 0 {
+			res = append(res, start)
 		}
-
-
 	}
 
 	return res
