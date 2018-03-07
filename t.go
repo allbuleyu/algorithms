@@ -16,8 +16,10 @@ func main() {
 	//tt, _ := time.Parse("2006-01-02 15:04:05", "2018-02-01 00:00:00.000")
 	//fmt.Println(findWeek(tt), findStartAndEnd(tt))
 	//return
-	s := "barfoofoobarthefoobarman"
-	t := []string{"bar","foo","the"}
+	s := "aaaaaa"
+	t := []string{"aaa", "aaa"}
+	//s := "barfoofoobarthefoobarman"
+	//t := []string{"bar","foo","the"}
 	//s := "wordgoodgoodgoodbestword"
 	//t := []string{"word","good","best","good"}
 	fmt.Println(leetcode.FindSubstring(s,t))

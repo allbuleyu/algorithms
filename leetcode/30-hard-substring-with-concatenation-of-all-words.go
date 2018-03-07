@@ -24,11 +24,15 @@ func findSubstring(s string, words []string) []int {
 	}
 
 	strLen := len(words) * wordLen
+	if len(s) < strLen {
+		return []int{}
+	}
 	res := make([]int, 0)
 	start := 0
-	for i:=wordLen; i < len(s);i++ {
-		m[s[i-wordLen:i]]--
-		if m[s[i-wordLen:i]] >= 0 {
+	for i:=wordLen; i <= len(s);i++ {
+		word := s[i-wordLen:i]
+		m[word]--
+		if m[word] >= 0 {
 			count--
 		}
 
@@ -36,11 +40,13 @@ func findSubstring(s string, words []string) []int {
 			res = append(res, start)
 		}
 
-		if i+1-strLen == start {
-			m[s[start:start+wordLen]]++
-			if m[s[start:start+wordLen]] > 0 {
+		if i-strLen == start {
+			sword := s[start:start+wordLen]
+			m[sword]++
+			if m[sword] > 0 {
 				count++
 			}
+
 			start++
 		}
 	}
