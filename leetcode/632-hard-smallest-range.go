@@ -21,3 +21,7 @@ package leetcode
 func smallestRange(nums [][]int) []int {
 	return []int{}
 }
+
+func SmallestRange(nums [][]int) []int {
+	return smallestRange(nums)
+}

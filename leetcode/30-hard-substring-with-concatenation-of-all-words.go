@@ -11,5 +11,88 @@ package leetcode
 //(order does not matter).
 
 func findSubstring(s string, words []string) []int {
-	return []int{}
+	m := make(map[string]int)
+	count := 0
+	wordLen := 0
+	for _, word := range words {
+		if wordLen == 0 {
+			wordLen = len(word)
+		}
+
+		m[word]++
+		count++
+	}
+
+	strLen := len(words) * wordLen
+	res := make([]int, 0)
+	start := 0
+	for i:=wordLen; i < len(s);i++ {
+		m[s[i-wordLen:i]]--
+		if m[s[i-wordLen:i]] >= 0 {
+			count--
+		}
+
+		if count == 0 {
+			res = append(res, start)
+		}
+
+		if i+1-strLen == start {
+			m[s[start:start+wordLen]]++
+			if m[s[start:start+wordLen]] > 0 {
+				count++
+			}
+			start++
+		}
+	}
+
+	return res
+}
+
+func findSubstring1(s string, words []string) []int {
+	hs := [58]int{}
+	count := 0
+	for _, word := range words {
+		for _, w := range word {
+			hs[w-'A']++
+			count++
+		}
+	}
+	sbuLen := len(words[0])
+	strLen := count
+	start := 0
+	res := make([]int, 0)
+	for i, v := range s {
+		hs[v-'A']--
+		if hs[v-'A'] >= 0 {
+			count--
+		}
+
+		if count == 0 {
+			res = append(res, start)
+
+			for j:= start; j < start+sbuLen; j++ {
+				hs[s[j]-'A']++
+			}
+
+			start += sbuLen
+			count += sbuLen
+			i += sbuLen
+			continue
+		}
+
+		if i+1-strLen == start {
+			hs[s[start]-'A']++
+			if hs[s[start]-'A'] > 0 {
+				count++
+			}
+
+			start++
+		}
+	}
+
+	return res
+}
+
+func FindSubstring(s string, words []string) []int {
+	return findSubstring(s , words)
 }
