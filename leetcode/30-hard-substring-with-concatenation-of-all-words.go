@@ -9,90 +9,67 @@ package leetcode
 //
 //You should return the indices: [0,9].
 //(order does not matter).
-
+// 移动窗口,把words里面的单词当做一个字母的思路来解
 func findSubstring(s string, words []string) []int {
-	m := make(map[string]int)
-	count := 0
-	wordLen := 0
-	for _, word := range words {
-		if wordLen == 0 {
-			wordLen = len(word)
-		}
-
-		m[word]++
-		count++
-	}
-
-	strLen := len(words) * wordLen
-	if len(s) < strLen {
-		return []int{}
-	}
 	res := make([]int, 0)
-	start := 0
-	for i:=wordLen; i <= len(s);i++ {
-		word := s[i-wordLen:i]
-		m[word]--
-		if m[word] >= 0 {
-			count--
+	hashMap := make(map[string]int, len(words))
+
+	lens, lenWords, subStrLen := len(s), len(words), len(words[0])
+
+	count := lenWords
+	initFunc := func() {
+		for _, word := range words {
+			hashMap[word] = 0
 		}
 
-		if count == 0 {
-			res = append(res, start)
+		for _, word := range words {
+			hashMap[word]++
 		}
 
-		if i-strLen == start {
-			sword := s[start:start+wordLen]
-			m[sword]++
-			if m[sword] > 0 {
-				count++
-			}
-
-			start++
-		}
+		count = lenWords
 	}
 
-	return res
-}
+	for i := 0; i < subStrLen; i++ {
+		index := i
 
-func findSubstring1(s string, words []string) []int {
-	hs := [58]int{}
-	count := 0
-	for _, word := range words {
-		for _, w := range word {
-			hs[w-'A']++
+		moveIndex := func() {
+			hashMap[s[index:index+subStrLen]]++
+			index += subStrLen
 			count++
 		}
-	}
-	sbuLen := len(words[0])
-	strLen := count
-	start := 0
-	res := make([]int, 0)
-	for i, v := range s {
-		hs[v-'A']--
-		if hs[v-'A'] >= 0 {
-			count--
-		}
 
-		if count == 0 {
-			res = append(res, start)
+		initFunc()
 
-			for j:= start; j < start+sbuLen; j++ {
-				hs[s[j]-'A']++
+		for index + lenWords * subStrLen <= lens {
+			start := index + (lenWords - count) * subStrLen
+			end := index + (lenWords - count + 1) * subStrLen
+			word := s[start:end]
+			numWord, ok := hashMap[word]
+
+			if !ok {
+				index += subStrLen
+
+				if count != lenWords {
+					initFunc()
+				}
+			}else if numWord == 0 {
+				//hashMap[word]++
+				//count++
+				//index += subStrLen
+				moveIndex()
+			}else {
+				hashMap[word]--
+				count--
+
+				if count == 0 {
+					res = append(res, index)
+
+					//hashMap[word]++
+					//index += subStrLen
+					//count++
+					moveIndex()
+				}
 			}
-
-			start += sbuLen
-			count += sbuLen
-			i += sbuLen
-			continue
-		}
-
-		if i+1-strLen == start {
-			hs[s[start]-'A']++
-			if hs[s[start]-'A'] > 0 {
-				count++
-			}
-
-			start++
 		}
 	}
 

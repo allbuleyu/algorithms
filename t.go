@@ -16,14 +16,20 @@ func main() {
 	//tt, _ := time.Parse("2006-01-02 15:04:05", "2018-02-01 00:00:00.000")
 	//fmt.Println(findWeek(tt), findStartAndEnd(tt))
 	//return
-	s := "aaaaaa"
-	t := []string{"aaa", "aaa"}
+
+	s := ""
+	t := "a"
+	fmt.Println(leetcode.MinDistance(s,t))
+	return
+
+	//s := "aaaaaaaa"
+	//t := []string{"aa", "aa"}
 	//s := "barfoofoobarthefoobarman"
 	//t := []string{"bar","foo","the"}
-	//s := "wordgoodgoodgoodbestword"
+	//s := "swordgoodgoodgoodbestword"
 	//t := []string{"word","good","best","good"}
-	fmt.Println(leetcode.FindSubstring(s,t))
-	return
+	//fmt.Println(leetcode.FindSubstring(s,t))
+	//return
 
 	//intSlice := []int{4,5,5,6}
 	intSlice := []int{2,3,1,2,4,3}
