@@ -19,6 +19,7 @@ func minDistance(word1 string, word2 string) int {
 	return m + n - 2 * lcs(word1, word2, m, n)
 }
 
+
 func lcs(word1, word2 string, m, n int) int {
 	if m == 0 || n == 0 {
 		return 0
@@ -53,6 +54,8 @@ func minDistance1(word1 string, word2 string) int {
 	return m + n - 2 * dp[m][n]
 }
 
+// 直接算删除的步骤
+// 时间复杂度 O(m*n) 空间复杂度 O(m*n)
 func minDistance2(word1 string, word2 string) int {
 	m, n := len(word1), len(word2)
 	dp := make([][]int, m+1)
@@ -75,6 +78,8 @@ func minDistance2(word1 string, word2 string) int {
 	return dp[m][n]
 }
 
+// 直接算删除的步骤 2的进阶
+// 时间复杂度 O(m*n) 空间复杂度 (n)
 func minDistance3(word1 string, word2 string) int {
 	m, n := len(word1), len(word2)
 	dp := make([]int, n+1)
