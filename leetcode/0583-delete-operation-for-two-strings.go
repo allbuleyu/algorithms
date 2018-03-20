@@ -12,7 +12,7 @@ import "math"
 //Note:
 //The length of given words won't exceed 500.
 //Characters in given words can only be lower-case letters.
-
+//next challenge 76, 712
 func minDistance(word1 string, word2 string) int {
 	m, n := len(word1), len(word2)
 
