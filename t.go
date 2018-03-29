@@ -17,9 +17,11 @@ func main() {
 	//fmt.Println(findWeek(tt), findStartAndEnd(tt))
 	//return
 
-	s := ""
-	t := "a"
-	fmt.Println(leetcode.MinDistance(s,t))
+	s := "ccaccjp"
+	t := "fwosarcwge"
+	//s := "delete"
+	//t := "leet"
+	fmt.Println(leetcode.MinimumDeleteSum(s,t))
 	return
 
 	//s := "aaaaaaaa"
