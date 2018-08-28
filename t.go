@@ -11,8 +11,8 @@ type myStruct struct {
 	q string
 }
 
-var arr []int = []int{2,4,5,6,1,2,3,6}
-//var arr []int = []int{2,8,7,1, 3, 5,6, 4}
+//var arr []int = []int{2,4,5,6,1,2,3,6}
+var arr []int = []int{2,8,7,1, 3, 5,6, 4}
 
 func main() {
 
@@ -20,7 +20,7 @@ func main() {
 
 	//ch2.MergeSortFor(arr)
 
-	ch2.QuickSort(arr, 0, len(arr))
+	ch2.QuickSortDesc(arr, 0, len(arr))
 	fmt.Println(arr)
 
 }

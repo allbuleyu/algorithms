@@ -1,5 +1,6 @@
 package ch2
 
+
 func partition(a []int, p, r int) int {
 	x := a[r-1]
 
@@ -25,4 +26,30 @@ func QuickSort(a []int, p, r int)  {
 		QuickSort(a, q+1, r)
 	}
 
+}
+
+func partitionDesc(a []int, p, r int) int {
+	x := a[p]
+
+	i := r
+
+	for j := r-1; j > p; j-- {
+		if a[j] >= x {
+			i--
+			a[i], a[j] = a[j], a[i]
+		}
+	}
+
+	a[i-1], a[p] = a[p], a[i-1]
+
+	return i-1
+}
+
+func QuickSortDesc(a []int, p, r int) {
+	if p < r {
+		q := partitionDesc(a, p, r)
+
+		QuickSort(a, p, q)
+		QuickSort(a, q+1, r)
+	}
 }
