@@ -20,8 +20,12 @@ func main() {
 
 	//ch2.MergeSortFor(arr)
 
-	ch2.QuickSortDesc(arr, 0, len(arr))
+	ch2.QuickSort(arr, 0, len(arr))
 	fmt.Println(arr)
+
+
+
+
 
 }
 
