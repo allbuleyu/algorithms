@@ -49,5 +49,96 @@ package leetcode
  * }
  */
 func deleteNode(root *TreeNode, key int) *TreeNode {
+	if root == nil {
+		return nil
+	}
+
+	x := bstSearch(root, key)
+
+	if x == nil {
+		return root
+	}
+
+	if x.Left == nil {
+		x = x.Right
+	}else if x.Right == nil {
+		x = x.Left
+	}else {
+		y := minimum(root.Right)
+		if y != x.Right {
+			y.Right = x.Right
+			y.Left = x.Left
+		}
+
+		x = y
+	}
+
+	// 如果删除的不是root直接关联的子孩子,那么root引用不会有变化
+	if x != root.Left && x != root.Right {
+		return root
+	}
+
+	
+	return root
+}
+
+func  bstSearch(root *TreeNode, key int) *TreeNode {
+	if root == nil {
+		return nil
+	}
+
+	var search *TreeNode
+
+	if root.Val < key {
+		search = bstSearch(root.Right, key)
+	}else if root.Val > key {
+		search = bstSearch(root.Left, key)
+	}else {
+		search = root
+	}
+
+	return search
+}
+
+func bstSearch2(root *TreeNode, key int) *TreeNode {
+	search := root
+
+	for search != nil {
+		if search.Val < key {
+			search = search.Right
+		}else if search.Val > key {
+			search = search.Left
+		}else {
+			return search
+		}
+	}
+	
 	return nil
+}
+
+// 找到二叉搜索树 key的后继 
+func bstSuccessor(root *TreeNode, key int) *TreeNode {
+	return nil
+}
+
+func minimum(root *TreeNode) *TreeNode {
+	x := root
+	if root.Left != nil {
+		x = minimum(root.Left)
+	}
+
+	return x
+}
+
+func minimum1(root *TreeNode) *TreeNode {
+	var x *TreeNode
+	for {
+		if root.Left == nil {
+			break
+		}
+
+		x = root.Left
+	}
+
+	return x
 }
