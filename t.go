@@ -1,8 +1,10 @@
 package main
 
 import (
-	"github.com/allbuleyu/algorithms/introductionToAlgorighms/ch2"
+	"io/ioutil"
 	"fmt"
+	"os"
+	"strings"
 )
 
 type myStruct struct {
@@ -15,36 +17,47 @@ type myStruct struct {
 var arr []int = []int{2,8,7,1, 3, 5,6, 4}
 
 func main() {
+	base := "./leetcode/"
+	files, _ := ioutil.ReadDir(base)
+	for _, f := range files {
+		if f.IsDir() {
+			continue
+		}
 
-	s1 := "123"
-	fmt.Println(&s1, s1)
+		fname := strings.Replace(f.Name(), "-easy", "", 1)
+		fname = strings.Replace(fname, "-hard", "", 1)
 
-	s1 = s1[0:1] + " " + s1[1:]
-	fmt.Println(&s1, s1)
+		filename := strings.Split(fname, "-")
+		filename[0] = strings.Replace(fmt.Sprintf("%4s", filename[0]), " ", "0", 10)
 
+		pack := "package prob" + filename[0]
 
-	i1 := 123
-	i2 := 345
+		dirname := strings.Replace(strings.Join(filename, "-"), ".go", "", 1)
+		dirname = base+dirname
+		name := strings.Join(filename[1:], "-")
 
-	fmt.Println(&i1, i1)
+		filePath := base+f.Name()
+		file, err := os.OpenFile(filePath, os.O_RDWR, 0)
+		if err != nil {
+			fmt.Println("err is :", err)
+			break
+		}
 
-	i1 = i2
-	fmt.Println(&i1, i1)
+		file.WriteString(pack)
+		file.Close()
 
-
-	return
-
-	//ch2.MergeSort(arr, 0, len(arr))
-
-	//ch2.MergeSortFor(arr)
-
-	ch2.QuickSort(arr, 0, len(arr))
-	fmt.Println(arr)
-
+		err = os.Mkdir(dirname, 0755)
 
 
+		//filePath = strings.Replace(filePath, "easy", "", 1)
+		//filePath = strings.Replace(filePath, "hard", "", 1)
+
+		os.Rename(filePath, dirname+"/"+name)
 
 
+
+
+	}
 }
 
 
