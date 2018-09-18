@@ -35,6 +35,11 @@ func Test_prb0001(t *testing.T)  {
 			[]int{2, 7, 11, 15},
 			[]int{2, 3},
 		},
+		{
+			29,
+			[]int{2, 7, 11, 15},
+			[]int{},
+		},
 	}
 
 	for _, tc := range tcs {

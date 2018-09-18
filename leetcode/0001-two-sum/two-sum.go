@@ -13,11 +13,35 @@ package prob0001
 //Because nums[0] + nums[1] = 2 + 7 = 9,
 //return [0, 1].
 
-func twoSum(nums []int, target int) []int {
-	n := len(nums)
 
-	for i, j := 0, n-1; i < j; i, j = i+1, j-1 {
-		if nums[i] + nums[j] == target {
+// 思路: a + b = c  => b = c - a
+// 问题就转化为了找b的过程
+func twoSum(nums []int, target int) []int {
+	m := map[int]int{}
+
+	for i := 0; i < len(nums); i++ {
+		complement := target - nums[i]
+
+		if j, ok := m[complement]; ok {
+			return []int{j, i}
+		}
+
+		m[nums[i]] = i
+	}
+
+	return []int{}
+}
+
+func twoSum2(nums []int, target int) []int {
+	m := map[int]int{}
+	for i := 0; i < len(nums); i++ {
+		m[nums[i]] = i
+	}
+
+	for i := 0; i < len(nums); i++ {
+		complement := target - nums[i]
+
+		if j, ok := m[complement]; ok {
 			return []int{i, j}
 		}
 	}
