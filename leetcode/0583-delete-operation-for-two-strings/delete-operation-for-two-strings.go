@@ -1,6 +1,8 @@
 package prob0583
 
-import "math"
+import (
+	"math"
+)
 
 //https://leetcode.com/problems/delete-operation-for-two-strings/description/
 //Given two words word1 and word2, find the minimum number of steps required to make word1 and word2 the same, where in each step you can delete one character in either string.
@@ -16,7 +18,31 @@ import "math"
 func minDistance(word1 string, word2 string) int {
 	m, n := len(word1), len(word2)
 
-	return m + n - 2 * lcs(word1, word2, m, n)
+	dp := make([][]int, m+1)
+	for i := 0; i < m+1; i++ {
+		dp[i] = make([]int, n+1)
+	}
+
+	dp[0][0] = 0
+	for i := 0; i < m; i++ {
+		for j := 0; j < n; j++ {
+			if j == 0 {
+				dp[i+1][0] = i+1
+			}
+
+			if i == 0 {
+				dp[0][j+1] = j+1
+			}
+
+			if word1[i] == word2[j] {
+				dp[i+1][j+1] = dp[i][j]
+			}else {
+				dp[i+1][j+1] = dp[i][j+1]
+			}
+		}
+	}
+
+	return dp[m][n]
 }
 
 

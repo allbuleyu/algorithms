@@ -7,10 +7,6 @@ import (
 func reverse(x int) int {
 	var res int
 
-	if x % 10 == x {
-		return x
-	}
-
 	for x != 0 {
 		y := x % 10
 
