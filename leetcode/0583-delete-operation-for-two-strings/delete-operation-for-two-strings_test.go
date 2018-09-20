@@ -27,7 +27,10 @@ func Test_prob0583(t *testing.T)  {
 			6,
 		},{
 			"leetcode", "",
-			6,
+			8,
+		},{
+			"", "leetcode",
+			8,
 		},
 	}
 
