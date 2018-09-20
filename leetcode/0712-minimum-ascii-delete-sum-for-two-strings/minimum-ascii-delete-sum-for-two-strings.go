@@ -1,5 +1,7 @@
 package prob0712
 
+import "fmt"
+
 //https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/description/
 //Given two strings s1, s2, find the lowest ASCII sum of deleted characters to make two strings equal.
 //
@@ -22,89 +24,38 @@ package prob0712
 //All elements of each string will have an ASCII value in [97, 122].
 
 func minimumDeleteSum(s1 string, s2 string) int {
-	n1, n2 := len(s1), len(s2)
-	dp := make([]int, n2+1)
+	m, n := len(s1), len(s2)
 
-	for j := n2 -1; j >= 0; j-- {
-		dp[j] = dp[j+1] + int(s2[j])
+	dp := make([][]int, m+1)
+	for i := 0; i < m+1; i++ {
+		dp[i] = make([]int, n+1)
+		if i > 0 {
+			dp[i][0] = int(s1[i-1]) + dp[i-1][0]
+		}
+	}
+
+	for i := 1; i < n + 1;i++ {
+		dp[0][i] = int(s2[i-1]) + dp[0][i-1]
 	}
 
 
-	for i := n1 - 1; i >= 0; i-- {
-		tmp := make([]int, n2+1)
-		if i == n1 - 1 {
-			for j := n2 -1; j >= 0; j-- {
-				tmp[j] = tmp[j+1] + int(s2[j])
-			}
-		}
 
-		tmp[n2] = int(s1[i])
-		for j := n2 -1; j >= 0; j-- {
-			if s1[i] == s2[j] {
-				tmp[j] = dp[j+1]
+	for i := 1; i <= m; i++ {
+		for j := 1; j <= n; j++ {
+			if s1[i-1] == s2[j-1] {
+				dp[i][j] = dp[i-1][j-1]
 			}else {
-				tmp[j] = min(dp[j]+int(s1[i]), tmp[j+1]+int(s2[j]))
+				dp[i][j] = min(dp[i][j-1]+int(s2[j-1]), dp[i-1][j]+int(s1[i-1]))
 			}
 		}
-		dp = tmp
-	}
-
-	return dp[0]
-}
-
-func minimumDeleteSum1(s1 string, s2 string) int {
-	n1, n2 := len(s1), len(s2)
-	dp := make([]string, n2+1)
-
-	for j := n2 -1; j >= 0; j-- {
-		dp[j] = dp[j+1] + string(s2[j])
 	}
 
 
-	for i := n1 - 1; i >= 0; i-- {
-		tmp := make([]string, n2+1)
-		if i == n1 - 1 {
-			for j := n2 -1; j >= 0; j-- {
-				tmp[j] = tmp[j+1] + string(s2[j])
-			}
-		}
-
-		tmp[n2] = string(s1[i])
-		for j := n2 -1; j >= 0; j-- {
-			if s1[i] == s2[j] {
-				tmp[j] = dp[j+1]
-			}else {
-				tmp[j] = min1(dp[j]+string(s1[i]), tmp[j+1]+string(s2[j]))
-			}
-		}
-		dp = tmp
-	}
-
-	return 1
-}
-
-func MinimumDeleteSum(s1 string, s2 string) int {
-	return minimumDeleteSum1(s1 , s2 )
+	return dp[m][n]
 }
 
 func min(a, b int) int {
-	if a < b {
-		return a
-	}
-	return b
-}
-
-func min1(a, b string) string {
-	var sum1, sum2 int
-	for i := range a {
-		sum1 += int(a[i])
-	}
-
-	for i := range b {
-		sum2 += int(b[i])
-	}
-
-	if sum1 > sum2 {
+	if a > b {
 		return b
 	}
 
