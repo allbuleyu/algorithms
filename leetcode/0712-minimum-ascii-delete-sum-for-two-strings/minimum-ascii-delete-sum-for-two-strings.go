@@ -1,7 +1,5 @@
 package prob0712
 
-import "fmt"
-
 //https://leetcode.com/problems/minimum-ascii-delete-sum-for-two-strings/description/
 //Given two strings s1, s2, find the lowest ASCII sum of deleted characters to make two strings equal.
 //
