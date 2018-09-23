@@ -2,19 +2,13 @@ package prob0264
 
 
 func nthUglyNumber(n int) int {
-	var un, ugly int
+	return 0
+}
 
-	hash := make(map[int]bool)
-
-	ugly = 1
-	un = 1
-	for un != n {
-		if _, ok := hash[ugly]; !ok {
-			hash[ugly] = true
-
-			un++
-		}
-
-
+func min(a, b int) int {
+	if a > b {
+		return b
 	}
+
+	return a
 }
