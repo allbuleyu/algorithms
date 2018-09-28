@@ -17,6 +17,11 @@ type myStruct struct {
 var arr []int = []int{2,8,7,1, 3, 5,6, 4}
 
 func main() {
+	nums := []int{1}
+
+	fmt.Println(nums[:0])
+	return
+
 	base := "./leetcode/"
 	files, _ := ioutil.ReadDir(base)
 	for _, f := range files {
