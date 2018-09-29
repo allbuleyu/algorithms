@@ -24,7 +24,7 @@ func Test_prob0070(t *testing.T) {
 
 	for _, tc := range tcs {
 
-		isEqual := ast.Equal(tc.ans, climbStairs(tc.input), "input is %v", tc.input)
+		isEqual := ast.Equal(tc.ans, climbStairsOptimize(tc.input), "input is %v", tc.input)
 		if isEqual {
 			fmt.Printf("test case passed: ~~~%v~~~ \n", tc)
 			fmt.Printf("%*s input: %v and expected is: %v \n", 10, " ", tc.input, tc.ans)
