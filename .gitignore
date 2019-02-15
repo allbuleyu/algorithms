@@ -39,7 +39,7 @@ local.properties
 # TeXlipse plugin
 .texlipse
 
-Runtime
+#Runtime
 *.DS_Store
 
 # idea

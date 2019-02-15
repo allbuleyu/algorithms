@@ -3,8 +3,8 @@ package prob0001
 import (
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"fmt"
+	"github.com/stretchr/testify/assert"
 )
 
 func Test_prb0001(t *testing.T)  {
