@@ -14,5 +14,3 @@ Note:
 
 1 is typically treated as an ugly number.
 n does not exceed 1690.
-
-简历已经被HR推入人才库，请重新投递
