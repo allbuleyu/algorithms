@@ -15,8 +15,6 @@ func removeElement(nums []int, val int) int {
 		}
 	}
 
-	//println(resIndex)
-	//return 0
-
+	// why not resIndex+1  thin of line 11 resIndex++ step
 	return resIndex
 }
