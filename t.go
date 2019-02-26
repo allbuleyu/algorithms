@@ -17,9 +17,11 @@ type myStruct struct {
 var arr []int = []int{2,8,7,1, 3, 5,6, 4}
 
 func main() {
-	nums := []int{1}
+	fmt.Println('{','}')
+	str := "abc"
 
-	fmt.Println(nums[:0])
+	str = str[:1]
+	fmt.Println(str)
 	return
 
 	base := "./leetcode/"
