@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # [0746-min-cost-climbing-stairs](https://leetcode.com/problems/min-cost-climbing-stairs)
 
 On a staircase, the i-th step has some non-negative cost cost[i] assigned (0 indexed).
@@ -16,3 +17,6 @@ Explanation: Cheapest is start on cost[0], and only step on 1s, skipping cost[3]
 ###Note:
 cost will have a length in the range [2, 1000].
 Every cost[i] will be an integer in the range [0, 999].
+=======
+# [0746-min-cost-climbing-stairs](https://leetcode.com/problems/min-cost-climbing-stairs)
+>>>>>>> 34cfd67db642458eb59534443a215c006677fcca

@@ -33,6 +33,7 @@ func expandAroundCenter(s string) string {
 	return res
 }
 
+// 动态规划算法没懂,先写其它的算法,回头再来看
 func dynamicProgramming(s string) string {
 	dp := make([][]bool, len(s))
 
