@@ -1,6 +1,18 @@
 package prob0746
 
 func minCostClimbingStairs(cost []int) int {
+<<<<<<< HEAD
+
+}
+
+func dynamicProgramming(cost []int) int {
+	dp := make([]int, len(cost)+1)
+	dp[0] = 0
+	dp[1] = cost[0]
+	for i := 1; i<len(cost); i++ {
+
+	}
+=======
 	return dynamicProgramming(cost)
 }
 
@@ -27,4 +39,5 @@ func min(a, b int) int {
 	}
 
 	return a
+>>>>>>> 34cfd67db642458eb59534443a215c006677fcca
 }
