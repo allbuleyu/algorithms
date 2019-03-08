@@ -12,21 +12,18 @@ import "github.com/allbuleyu/algorithms/kit"
 
 type ListNode = kit.ListNode
 func deleteDuplicates(head *ListNode) *ListNode {
-	op := head
+	if head == nil {
+		return nil
+	}
 
-	noDup := head.Val
-	for op != nil {
-		if op.Next == nil {
-			break
-		}
-
-		if op.Next.Val == noDup {
-			op.Next = op.Next.Next
+	cur := head
+	for cur.Next != nil {
+		if cur.Val == cur.Next.Val {
+			cur.Next = cur.Next.Next
 		}else {
-			noDup = op.Next.Val
+			cur = cur.Next
 		}
 
-		op = op.Next
 	}
 
 	return head
