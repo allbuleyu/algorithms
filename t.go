@@ -3,13 +3,11 @@ package main
 import (
 	"fmt"
 	"github.com/allbuleyu/algorithms/kit"
-	"reflect"
 )
 
 func main() {
-	var tmp byte
-	tmp = '0'
-	fmt.Println(reflect.TypeOf(&tmp).Elem().Name())
+	bys := []byte{'0','1', '2', '3', '4', '5', '6', '7', '8', '9'}
+	fmt.Println(bys)
 	return
 
 	nums := []int{1, 2, 3, 4, 5, 6}
