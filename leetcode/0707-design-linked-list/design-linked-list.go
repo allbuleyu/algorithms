@@ -101,7 +101,7 @@ func (this *MyLinkedList) DeleteAtIndex(index int)  {
 	}
 
 	headPrev := &Node{next:this.head}
-	for index >= 0 {
+	for index >= 0 && headPrev.next != nil {
 		if index == 0 {
 			headPrev.next = headPrev.next.next
 		}
