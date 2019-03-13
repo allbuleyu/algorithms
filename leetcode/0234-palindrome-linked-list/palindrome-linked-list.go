@@ -14,20 +14,42 @@ type ListNode = kit.ListNode
  * }
  */
 func isPalindrome(head *ListNode) bool {
+	return solution1(head)
+}
+
+func reverse(h *ListNode) *ListNode {
+	var reverseNode *ListNode
+
+	for h != nil {
+		tmp := h
+		h = h.Next
+
+		reverseNode, tmp.Next = tmp, reverseNode
+	}
+
+	return reverseNode
+}
+
+// 此解决方案速度100%,空间20%
+// 尝试其它方案能不能100%速度,100%空间
+func solution1(head *ListNode) bool {
+	if head == nil || head.Next == nil {
+		return true
+	}
+
 	slow := head
 	fast := head
 
-	var converseNode *ListNode
+	var converseNode, tmp *ListNode
 
 	for fast != nil && fast.Next != nil {
-		tmp := slow
+		tmp = slow
+
 		slow = slow.Next
 		fast = fast.Next.Next
 
-		tmp.Next = converseNode
+		tmp.Next = converseNode		// 这一步会导致head.next直接改变,所以要在这之前,让slow,fast走到下个节点
 		converseNode = tmp
-
-		//fast = fast.Next.Next
 	}
 
 	// 判断链表的长度是否为奇数,奇数要略过中间的数

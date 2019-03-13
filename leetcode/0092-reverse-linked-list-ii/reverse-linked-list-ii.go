@@ -14,12 +14,12 @@ func reverseBetween(head *ListNode, m int, n int) *ListNode {
 	if m == n {
 		return head
 	}
+	preHead := &ListNode{Next:head}
+	leftNode, rightNode := preHead, preHead.Next
 
-	leftNode, rightNode := head, head
-
-	var reverseHead *ListNode
+	var reverseHead, reverseTail *ListNode
 	for n > 0 {
-		if m > 0 {
+		if m > 1 {
 			leftNode = leftNode.Next
 			rightNode = rightNode.Next
 		}else {
@@ -27,14 +27,17 @@ func reverseBetween(head *ListNode, m int, n int) *ListNode {
 			rightNode = rightNode.Next
 
 			reverseHead, tmp.Next = tmp, reverseHead
+			if reverseTail == nil {
+				reverseTail = reverseHead
+			}
 		}
-
 
 		m--
 		n--
 	}
 
 	leftNode.Next = reverseHead
+	reverseTail.Next = rightNode
 
-	return head
+	return preHead.Next
 }
