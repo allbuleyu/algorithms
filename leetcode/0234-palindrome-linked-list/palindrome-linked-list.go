@@ -14,9 +14,8 @@ type ListNode = kit.ListNode
  * }
  */
 func isPalindrome(head *ListNode) bool {
-	var slow, fast *ListNode
-	slow = head
-	fast = head
+	slow := head
+	fast := head
 
 	var converseNode *ListNode
 
