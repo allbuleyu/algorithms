@@ -46,6 +46,10 @@ func main()  {
 	//}
 
 	isExist := os.IsExist(err)
+	if isExist {
+		panic("file or dir has been existed")
+	}
+
 	if err != nil && !isExist {
 		fmt.Printf("%s \n", err)
 		return
