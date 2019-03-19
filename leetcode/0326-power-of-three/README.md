@@ -1,0 +1,1 @@
+# [0326-power-of-three](https://leetcode.com/problems/power-of-three)

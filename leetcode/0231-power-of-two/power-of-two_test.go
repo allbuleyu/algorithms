@@ -18,7 +18,7 @@ var tcs = []struct{
 
 }
 
-func Test_missingNumber(t *testing.T) {
+func Test_isPowerOfTwo(t *testing.T) {
 	ast := assert.New(t)
 
 	// test case
