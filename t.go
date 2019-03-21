@@ -6,6 +6,14 @@ import (
 )
 
 func main() {
+	var i, j int8
+	i = 1
+	j = -127
+
+	fmt.Printf("i=%b, j=%b", i, j)
+
+	return
+
 	nums := []int{1, 2, 3, 4, 5}
 	sliceNums := make([]int, len(nums))
 	for i := range sliceNums {
