@@ -6,12 +6,12 @@ import (
 )
 
 func main() {
-	x := 0xffffffff
-	var xx uint
-	xx = 0xffffffff
+	var i, j int8
+	i = 1
+	j = -127
 
+	fmt.Printf("i=%b, j=%b", i, j)
 
-	fmt.Println(x, xx)
 	return
 
 	nums := []int{1, 2, 3, 4, 5}
