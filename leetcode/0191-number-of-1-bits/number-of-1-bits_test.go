@@ -19,12 +19,7 @@ var tcs = []struct {
 }
 
 func TestHammingWeight(t *testing.T) {
-	var i uint32 = 8
-	fmt.Println(i<<1)
-
 	ast := assert.New(t)
-
-
 
 	for _, tc := range tcs {
 		fmt.Printf("~~%v~~\n", tc)
