@@ -15,10 +15,8 @@ func Test_findComplement(t *testing.T)  {
 		input, ans int
 	}{
 		{5, 2},
-		{1, 0},
-		{0, 1},
 		{9, 6},
-		{-1, 1},
+
 	}
 
 	for _, tc := range tcs {

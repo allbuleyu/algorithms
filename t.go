@@ -6,6 +6,14 @@ import (
 )
 
 func main() {
+	x := 0xffffffff
+	var xx uint
+	xx = 0xffffffff
+
+
+	fmt.Println(x, xx)
+	return
+
 	nums := []int{1, 2, 3, 4, 5}
 	sliceNums := make([]int, len(nums))
 	for i := range sliceNums {
