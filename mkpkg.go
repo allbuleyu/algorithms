@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os/exec"
 	"strings"
 	"bytes"
 	"os"
@@ -76,6 +77,16 @@ func main()  {
 	mdPath := fmt.Sprintf("%s/README.md", dpath)
 	fmd, err := os.Create(mdPath)
 	fmd.WriteString(fmt.Sprintf("# [%s-%s](https://leetcode.com/problems/%s)", *pkg, *name, *name))
+
+	// 运行Git命令,把生成的文件加入Git中
+	cmd := exec.Command("git", "add", dpath)
+	err = cmd.Run()
+	if err != nil {
+		fmt.Println("cmd run fail, pls check err")
+		return
+	}
+
+
 
 	defer fmd.Close()
 	defer ft.Close()
