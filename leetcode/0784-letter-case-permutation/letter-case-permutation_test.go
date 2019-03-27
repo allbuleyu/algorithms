@@ -14,6 +14,9 @@ func Test_letterCasePermutation(t *testing.T) {
 		ans []string
 	}{
 		{"a1b2", []string{"a1b2", "a1B2", "A1b2", "A1B2"}},
+		{"12345", []string{"12345"}},
+		{"C", []string{"c", "C"}},
+
 	}
 
 	for _, tc := range tcs {
