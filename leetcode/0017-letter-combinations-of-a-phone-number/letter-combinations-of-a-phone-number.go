@@ -13,6 +13,10 @@ var m  =  map[byte]string{
 
 
 func letterCombinations(digits string) []string {
+	return recursion(digits)
+}
+
+func recursion(digits string) []string {
 	res := make([]string, 0)
 
 	n := len(digits)
@@ -28,7 +32,6 @@ func letterCombinations(digits string) []string {
 			input = append(input, s)
 		}
 	}
-
 
 	helper(&res, &[]byte{}, input, 0)
 

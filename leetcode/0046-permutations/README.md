@@ -1,0 +1,1 @@
+# [0046-permutations](https://leetcode.com/problems/permutations)
