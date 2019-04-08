@@ -1,17 +1,18 @@
 package main
 
 import (
+	"encoding/base64"
 	"fmt"
 	"reflect"
 )
 
 func main() {
-	var i, j int8
-	i = 1
-	j = -127
 
-	fmt.Printf("i=%b, j=%b", i, j)
+	b64 := base64.RawURLEncoding
+	str := make([]byte, 1000)
+	b64.Decode(str,[]byte("8IKW23gHgXTh0ri/tpfRyQ=="))
 
+	fmt.Printf(string(str))
 	return
 
 	nums := []int{1, 2, 3, 4, 5}
