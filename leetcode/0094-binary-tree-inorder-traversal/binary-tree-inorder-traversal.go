@@ -1,20 +1,8 @@
 package prob0094
 
-//https://leetcode.com/problems/binary-tree-inorder-traversal/description/
-//
-//Given a binary tree, return the inorder traversal of its nodes' values.
-//
-//Example:
-//
-//Input: [1,null,2,3]
-//1
-//\
-//2
-///
-//3
-//
-//Output: [1,3,2]
-//Follow up: Recursive solution is trivial, could you do it iteratively?
+import "github.com/allbuleyu/algorithms/kit"
+
+type TreeNode = kit.TreeNode
 
 /**
  * Definition for a binary tree node.
@@ -25,18 +13,5 @@ package prob0094
  * }
  */
 func inorderTraversal(root *TreeNode) []int {
-	res := []int{}
-	if root == nil {
-		return res
-	}
 
-	if root.Left != nil {
-		inorderTraversal(root.Left)
-	}
-
-	res = append(res, root.Val)
-
-	inorderTraversal(root.Right)
-
-	return res
 }
