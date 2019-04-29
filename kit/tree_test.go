@@ -10,5 +10,7 @@ func TestNetTrees(t *testing.T) {
 
 	nodes := NewTrees(tc)
 
-	fmt.Println(nodes.PostOrder())
+	//fmt.Println(nodes.InOrder(), nodes.depth)
+
+	fmt.Println(nodes.String())
 }
