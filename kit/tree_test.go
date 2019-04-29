@@ -8,7 +8,7 @@ import (
 func TestNetTrees(t *testing.T) {
 	tc := []int{1, Null, 2, 3}
 
-	nodes := NetTrees(tc)
+	nodes := NewTrees(tc)
 
 	fmt.Println(nodes.PostOrder())
 }
