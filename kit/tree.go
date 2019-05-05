@@ -140,6 +140,14 @@ func (t *Trees) Depth() int {
 	return t.depth
 }
 
+func (t *Trees) ptrDepth() int {
+	return t.depth
+}
+
+func (t Trees) NormalDepth() int {
+	return t.depth
+}
+
 func toIntsPreOrder(node *TreeNode, res *[]int) {
 	if node == nil {
 		return
