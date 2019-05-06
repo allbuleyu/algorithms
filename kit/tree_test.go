@@ -27,7 +27,7 @@ func Test_toIntsPreOrderIterate(t *testing.T) {
 
 	ast := assert.New(t)
 
-	ast.Equal(ans, toIntsPreOrderIterate(trees.Root))
+	ast.Equal(ans, preOrderIterate(trees.Root))
 }
 
 func Test_toIntsInOrderIterate(t *testing.T) {
@@ -38,11 +38,11 @@ func Test_toIntsInOrderIterate(t *testing.T) {
 
 	ast := assert.New(t)
 
-	ast.Equal(ans, toIntsInOrderIterate(trees.Root))
+	ast.Equal(ans, inOrderIterate(trees.Root))
 }
 
 
-func Test_toIntsPostOrderIterate(t *testing.T) {
+func Test_postOrderIterate(t *testing.T) {
 	tc := []int{1, 2, 3,4,5, Null,6}
 	ans := []int{4,5,2,6,3,1}
 
@@ -50,5 +50,5 @@ func Test_toIntsPostOrderIterate(t *testing.T) {
 
 	ast := assert.New(t)
 
-	ast.Equal(ans, toIntsPostOrderIterate(trees.Root))
+	ast.Equal(ans, postOrderIterate(trees.Root))
 }

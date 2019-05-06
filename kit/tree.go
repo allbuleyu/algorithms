@@ -93,19 +93,19 @@ func NewTrees(ints []int) Trees {
 
 func (t *Trees) PreOrder() []int {
 	res := make([]int, 0)
-	toIntsPreOrder(t.Root, &res)
+	preOrder(t.Root, &res)
 	return res
 }
 
 func (t *Trees) InOrder() []int {
 	res := make([]int, 0)
-	toIntsInOrder(t.Root, &res)
+	inOrder(t.Root, &res)
 	return res
 }
 
 func (t *Trees) PostOrder() []int {
 	res := make([]int, 0)
-	toIntsPostOrder(t.Root, &res)
+	postOrder(t.Root, &res)
 	return res
 }
 
@@ -151,24 +151,24 @@ func (t Trees) NormalDepth() int {
 }
 
 // 前序遍历
-func toIntsPreOrder(root *TreeNode, res *[]int) {
+func preOrder(root *TreeNode, res *[]int) {
 	if root == nil {
 		return
 	}
 
 	*res = append(*res, root.Val)
 	if root.Left != nil {
-		toIntsPreOrder(root.Left, res)
+		preOrder(root.Left, res)
 	}
 
 	if root.Right != nil {
-		toIntsPreOrder(root.Right, res)
+		preOrder(root.Right, res)
 	}
 
 }
 
 // 迭代法前序遍历
-func toIntsPreOrderIterate(root *TreeNode) []int {
+func preOrderIterate(root *TreeNode) []int {
 	if root == nil {
 		return nil
 	}
@@ -193,24 +193,24 @@ func toIntsPreOrderIterate(root *TreeNode) []int {
 }
 
 // 中序遍历
-func toIntsInOrder(root *TreeNode, res *[]int) {
+func inOrder(root *TreeNode, res *[]int) {
 	if root == nil {
 		return
 	}
 
 	if root.Left != nil {
-		toIntsInOrder(root.Left, res)
+		inOrder(root.Left, res)
 	}
 	*res = append(*res, root.Val)
 
 	if root.Right != nil {
-		toIntsInOrder(root.Right, res)
+		inOrder(root.Right, res)
 	}
 
 }
 
 // 迭代法中序遍历
-func toIntsInOrderIterate(root *TreeNode) []int {
+func inOrderIterate(root *TreeNode) []int {
 	if root == nil {
 		return nil
 	}
@@ -235,23 +235,23 @@ func toIntsInOrderIterate(root *TreeNode) []int {
 	return res
 }
 
-func toIntsPostOrder(root *TreeNode, res *[]int) {
+func postOrder(root *TreeNode, res *[]int) {
 	if root == nil {
 		return
 	}
 
 	if root.Left != nil {
-		toIntsPostOrder(root.Left, res)
+		postOrder(root.Left, res)
 	}
 
 	if root.Right != nil {
-		toIntsPostOrder(root.Right, res)
+		postOrder(root.Right, res)
 	}
 	*res = append(*res, root.Val)
 }
 
-// 后续遍历,迭代方式
-func toIntsPostOrderIterate(root *TreeNode) []int {
+// 迭代法,后续遍历
+func postOrderIterate(root *TreeNode) []int {
 	if root == nil {
 		return nil
 	}
@@ -259,12 +259,11 @@ func toIntsPostOrderIterate(root *TreeNode) []int {
 
 	stack := make([]*TreeNode, 0)
 	node := root
-	for node != nil {
+	for node != nil || len(stack) != 0 {
 		for node != nil {
 			res = append(res, node.Val)		// Add after all left children
 			stack = append(stack, node)
 			node = node.Right
-
 		}
 
 		node = stack[len(stack)-1]
@@ -272,7 +271,11 @@ func toIntsPostOrderIterate(root *TreeNode) []int {
 		node = node.Left
 	}
 
+	for i, j := 0, len(res)-1; i < j; i, j = i+1,j-1 {
+		res[i], res[j] = res[j], res[i]
+	}
 
 	return res
 }
 
+// 竟然还有	莫里斯遍历法,只使用常量的空间

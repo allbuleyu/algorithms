@@ -1,4 +1,4 @@
-package prob0144
+package prob0145
 
 import "github.com/allbuleyu/algorithms/kit"
 
@@ -11,47 +11,48 @@ type TreeNode = kit.TreeNode
  *     Right *TreeNode
  * }
  */
-func preorderTraversal(root *TreeNode) []int {
-	return preOrderIterate(root)
+func postorderTraversal(root *TreeNode) []int {
+	return postOrderIterate(root)
 }
 
-// 前序遍历
-func preOrder(root *TreeNode, res *[]int) {
+func postOrder(root *TreeNode, res *[]int) {
 	if root == nil {
 		return
 	}
 
-	*res = append(*res, root.Val)
 	if root.Left != nil {
-		preOrder(root.Left, res)
+		postOrder(root.Left, res)
 	}
 
 	if root.Right != nil {
-		preOrder(root.Right, res)
+		postOrder(root.Right, res)
 	}
-
+	*res = append(*res, root.Val)
 }
 
-// 迭代法前序遍历
-func preOrderIterate(root *TreeNode) []int {
+// 迭代法,后续遍历
+func postOrderIterate(root *TreeNode) []int {
 	if root == nil {
 		return nil
 	}
-
 	res := make([]int, 0)
+
 	stack := make([]*TreeNode, 0)
 	node := root
-
 	for node != nil || len(stack) != 0 {
 		for node != nil {
-			res = append(res, node.Val)		// Add before going to children
+			res = append(res, node.Val)		// Add after all left children
 			stack = append(stack, node)
-			node = node.Left
+			node = node.Right
 		}
 
 		node = stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
-		node = node.Right
+		node = node.Left
+	}
+
+	for i, j := 0, len(res)-1; i < j; i, j = i+1,j-1 {
+		res[i], res[j] = res[j], res[i]
 	}
 
 	return res
