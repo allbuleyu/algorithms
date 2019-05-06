@@ -261,14 +261,14 @@ func postOrderIterate(root *TreeNode) []int {
 	node := root
 	for node != nil || len(stack) != 0 {
 		for node != nil {
-			res = append(res, node.Val)		// Add after all left children
+			res = append(res, node.Val)		// Reverse the process of preorder
 			stack = append(stack, node)
-			node = node.Right
+			node = node.Right				// Reverse the process of preorder
 		}
 
 		node = stack[len(stack)-1]
 		stack = stack[:len(stack)-1]
-		node = node.Left
+		node = node.Left					// Reverse the process of preorder
 	}
 
 	for i, j := 0, len(res)-1; i < j; i, j = i+1,j-1 {
