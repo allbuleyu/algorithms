@@ -23,10 +23,8 @@ func recursion(root *TreeNode, sum int) bool {
 }
 
 func recursionHelp(root *TreeNode, sum *int, res *bool) {
-	if root.Left == nil && root.Right == nil {
-		if *sum == 0 {
-			*res = true
-		}
+	if root.Left == nil && root.Right == nil && *sum == 0 {
+		*res = true
 	}
 
 	if root.Left != nil {

@@ -33,7 +33,7 @@ type TreeNode struct {
 }
 
 type Trees struct {
-	Head *TreeNode
+	Root *TreeNode
 	depth int
 	sync.RWMutex
 }
@@ -55,12 +55,12 @@ func NewTrees(ints []int) Trees {
 	depth := 0
 
 	for i := 1; i < n; {
-		node := queue[0]
+		root := queue[0]
 		queue = queue[1:]
 
 		if ints[i] != Null {
-			node.Left = &TreeNode{Val:ints[i]}
-			queue = append(queue, node.Left)
+			root.Left = &TreeNode{Val:ints[i]}
+			queue = append(queue, root.Left)
 
 			if !isDepth {
 				depth++
@@ -70,8 +70,8 @@ func NewTrees(ints []int) Trees {
 		i++
 
 		if i < n && ints[i] != Null {
-			node.Right = &TreeNode{Val:ints[i]}
-			queue = append(queue, node.Right)
+			root.Right = &TreeNode{Val:ints[i]}
+			queue = append(queue, root.Right)
 
 			if !isDepth {
 				depth++
@@ -85,7 +85,7 @@ func NewTrees(ints []int) Trees {
 
 	
 	return Trees{
-		Head:root,
+		Root:root,
 		depth:depth,
 		RWMutex:sync.RWMutex{},
 	}
@@ -93,47 +93,49 @@ func NewTrees(ints []int) Trees {
 
 func (t *Trees) PreOrder() []int {
 	res := make([]int, 0)
-	toIntsPreOrder(t.Head, &res)
+	toIntsPreOrder(t.Root, &res)
 	return res
 }
 
 func (t *Trees) InOrder() []int {
 	res := make([]int, 0)
-	toIntsInOrder(t.Head, &res)
+	toIntsInOrder(t.Root, &res)
 	return res
 }
 
 func (t *Trees) PostOrder() []int {
 	res := make([]int, 0)
-	toIntsPostOrder(t.Head, &res)
+	toIntsPostOrder(t.Root, &res)
 	return res
 }
 
-// 显示出来的图形是前序遍历的结果
-func (t *Trees) String() string {
-	root := t.Head
-	stack := make([]*TreeNode, 0)
-	depth := t.depth
+// 格式化tree root 以图像的形式展示出来
+// 实质上还是中序遍历,只不过是输出字符串而已
+func (t Trees) String() string {
+	root := t.Root
+	buf := bytes.NewBuffer([]byte("trees fmt \n"))
 
-	buf := bytes.NewBuffer([]byte("tree fmt \n"))
+	treesString(root, buf, 0)
+	return buf.String()
+}
 
-	fmtStr := "-------"
-	cur := root
-	for cur != nil || len(stack) > 0 {
-		for cur != nil {
-			stack = append(stack, cur)
-			cur = cur.Left
-		}
-
-		cur = stack[len(stack)-1]
-
-		stack = stack[:len(stack)-1]
-		buf.WriteString(fmt.Sprintf("%s ;%d; %d \n", fmtStr, depth, cur.Val))
-		cur = cur.Right
+func treesString(root *TreeNode, buf *bytes.Buffer, depth int) {
+	if root == nil {
+		panic("cant fmt nil tree root")
 	}
 
+	if root.Left != nil {
+		treesString(root.Left, buf, depth+1)
+	}
 
-	return buf.String()
+	for i := 0; i < depth; i++ {
+		buf.WriteString("     ")
+	}
+	buf.WriteString(fmt.Sprintf(" --- %d \n", root.Val))
+
+	if root.Right != nil {
+		treesString(root.Right, buf, depth+1)
+	}
 }
 
 func (t *Trees) Depth() int {
@@ -148,50 +150,129 @@ func (t Trees) NormalDepth() int {
 	return t.depth
 }
 
-func toIntsPreOrder(node *TreeNode, res *[]int) {
-	if node == nil {
+// 前序遍历
+func toIntsPreOrder(root *TreeNode, res *[]int) {
+	if root == nil {
 		return
 	}
 
-	*res = append(*res, node.Val)
-	if node.Left != nil {
-		toIntsPreOrder(node.Left, res)
+	*res = append(*res, root.Val)
+	if root.Left != nil {
+		toIntsPreOrder(root.Left, res)
 	}
 
-	if node.Right != nil {
-		toIntsPreOrder(node.Right, res)
+	if root.Right != nil {
+		toIntsPreOrder(root.Right, res)
 	}
 
 }
 
-func toIntsInOrder(node *TreeNode, res *[]int) {
-	if node == nil {
+// 迭代法前序遍历
+func toIntsPreOrderIterate(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+
+	res := make([]int, 0)
+	stack := make([]*TreeNode, 0)
+	node := root
+
+	for node != nil || len(stack) != 0 {
+		for node != nil {
+			res = append(res, node.Val)		// Add before going to children
+			stack = append(stack, node)
+			node = node.Left
+		}
+
+		node = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		node = node.Right
+	}
+
+	return res
+}
+
+// 中序遍历
+func toIntsInOrder(root *TreeNode, res *[]int) {
+	if root == nil {
 		return
 	}
 
-	if node.Left != nil {
-		toIntsInOrder(node.Left, res)
+	if root.Left != nil {
+		toIntsInOrder(root.Left, res)
 	}
-	*res = append(*res, node.Val)
+	*res = append(*res, root.Val)
 
-	if node.Right != nil {
-		toIntsInOrder(node.Right, res)
+	if root.Right != nil {
+		toIntsInOrder(root.Right, res)
 	}
 
 }
 
-func toIntsPostOrder(node *TreeNode, res *[]int) {
-	if node == nil {
+// 迭代法中序遍历
+func toIntsInOrderIterate(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+
+	res := make([]int, 0)
+
+	stack := make([]*TreeNode, 0)
+	node := root
+	for node != nil || len(stack) != 0 {
+		for node != nil {
+			stack = append(stack, node)
+			node = node.Left
+		}
+
+		node = stack[len(stack)-1]
+		res = append(res, node.Val)		// Add after all left children
+		stack = stack[:len(stack)-1]
+
+		node = node.Right
+	}
+
+	return res
+}
+
+func toIntsPostOrder(root *TreeNode, res *[]int) {
+	if root == nil {
 		return
 	}
 
-	if node.Left != nil {
-		toIntsPostOrder(node.Left, res)
+	if root.Left != nil {
+		toIntsPostOrder(root.Left, res)
 	}
 
-	if node.Right != nil {
-		toIntsPostOrder(node.Right, res)
+	if root.Right != nil {
+		toIntsPostOrder(root.Right, res)
 	}
-	*res = append(*res, node.Val)
+	*res = append(*res, root.Val)
+}
+
+// 后续遍历,迭代方式
+func toIntsPostOrderIterate(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+	res := make([]int, 0)
+
+	stack := make([]*TreeNode, 0)
+	node := root
+	for node != nil {
+		for node != nil {
+			res = append(res, node.Val)		// Add after all left children
+			stack = append(stack, node)
+			node = node.Right
+
+		}
+
+		node = stack[len(stack)-1]
+		stack = stack[:len(stack)-1]
+		node = node.Left
+	}
+
+
+	return res
 }
 
