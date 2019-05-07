@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func Test_permute(t *testing.T) {
+func Test_hasPathSum(t *testing.T) {
 
 	tcs := []struct{
 		input []int
@@ -18,7 +18,6 @@ func Test_permute(t *testing.T) {
 		[]int{5,4,8,11,kit.Null,13,4,7,2, kit.Null,kit.Null,1},
 		22,
 		true,
-
 		},
 
 	}

@@ -251,6 +251,7 @@ func postOrder(root *TreeNode, res *[]int) {
 }
 
 // 迭代法,后续遍历
+// 实现逻辑是右节点的先序遍历,然后再把结果反过来
 func postOrderIterate(root *TreeNode) []int {
 	if root == nil {
 		return nil

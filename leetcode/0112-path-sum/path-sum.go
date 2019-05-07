@@ -12,30 +12,19 @@ type TreeNode = kit.TreeNode
  * }
  */
 func hasPathSum(root *TreeNode, sum int) bool {
-	return recursion(root,sum)
+	return recursion(root, sum)
 }
 
 func recursion(root *TreeNode, sum int) bool {
-	res := false
-	recursionHelp(root, &sum, &res)
+	if root == nil {
+		return false
+	}
 
-	return res
+	sum -= root.Val
+	if root.Left == nil && root.Right == nil && sum == 0 {
+		return true
+	}
+
+	return recursion(root.Left, sum) || recursion(root.Right, sum)
 }
 
-func recursionHelp(root *TreeNode, sum *int, res *bool) {
-	if root.Left == nil && root.Right == nil && *sum == 0 {
-		*res = true
-	}
-
-	if root.Left != nil {
-		*sum -= root.Val
-		recursionHelp(root.Left, sum, res)
-		*sum += root.Val
-	}
-
-	if root.Right != nil {
-		*sum -= root.Val
-		recursionHelp(root.Right, sum, res)
-		*sum += root.Val
-	}
-}
