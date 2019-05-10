@@ -109,6 +109,30 @@ func (t *Trees) PostOrder() []int {
 	return res
 }
 
+// 原样输出数组
+func ToIntsOriginal(root *TreeNode) []int {
+	if root == nil {
+		return nil
+	}
+	queue := make([]*TreeNode, 0)
+	queue = append(queue, root)
+
+	res := make([]int, 0)
+	for len(queue) != 0 {
+		node := queue[0]
+		queue = queue[1:]
+
+		if node == nil {
+			continue
+		}
+
+		res = append(res, node.Val)
+		queue = append(queue, node.Left, node.Right)
+	}
+
+	return res
+}
+
 // 格式化tree root 以图像的形式展示出来
 // 实质上还是中序遍历,只不过是输出字符串而已
 func (t Trees) String() string {
