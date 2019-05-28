@@ -12,7 +12,7 @@ type ListNode = kit.ListNode
  * }
  */
 func swapPairs(head *ListNode) *ListNode {
-	return iterate(head)
+	return recursion(head)
 }
 
 func iterate(head *ListNode) *ListNode {
@@ -48,7 +48,7 @@ func recursion(head *ListNode) *ListNode {
 	}
 
 	n := head.Next
-	head.Next = swapPairs(head.Next.Next)
+	head.Next = recursion(head.Next.Next)
 	n.Next = head
 
 	return n
