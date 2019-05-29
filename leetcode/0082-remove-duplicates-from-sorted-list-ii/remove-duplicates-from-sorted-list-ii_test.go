@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func Test_prb0083(t *testing.T)  {
+func Test_deleteDuplicates(t *testing.T)  {
 	ast := assert.New(t)
 
 	// test case

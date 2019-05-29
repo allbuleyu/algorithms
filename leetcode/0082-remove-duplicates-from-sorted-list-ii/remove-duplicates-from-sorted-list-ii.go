@@ -12,6 +12,17 @@ type ListNode = kit.ListNode
  * }
  */
 func deleteDuplicates(head *ListNode) *ListNode {
+	if head == nil {
+		return nil
+	}
+	return iterate(head)
+}
+
+func iterate(head *ListNode) *ListNode {
+
+}
+
+func recursion(head *ListNode) *ListNode {
 
 }
 
