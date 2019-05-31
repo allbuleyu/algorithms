@@ -6,6 +6,9 @@ import (
 )
 
 func main() {
+	fmt.Println(2%4, 4%2)
+	return
+
 	nums := []int{1, 2, 3, 4, 5}
 	sliceNums := make([]int, len(nums))
 	for i := range sliceNums {
