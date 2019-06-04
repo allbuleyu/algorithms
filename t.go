@@ -6,7 +6,7 @@ import (
 )
 
 func main() {
-	fmt.Println(2%4, 4%2)
+	fmt.Println(2%4, 4%2, 10%3)
 	return
 
 	nums := []int{1, 2, 3, 4, 5}
