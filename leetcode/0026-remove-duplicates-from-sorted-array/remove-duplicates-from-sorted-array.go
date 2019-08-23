@@ -4,6 +4,7 @@ func removeDuplicates(nums []int) int {
 	return optimize(nums)
 }
 
+// two pointers solution
 func optimize(nums []int) int {
 	if len(nums) == 0 {
 		return 0
