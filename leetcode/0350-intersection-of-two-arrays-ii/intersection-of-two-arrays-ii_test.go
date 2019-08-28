@@ -15,7 +15,7 @@ func Test_prob0349(t *testing.T) {
 	}{
 		{[]int{1,2,2,1}, []int{2,2}, []int{2,2}},
 		{[]int{1,2,2,1}, []int{2}, []int{2}},
-		{[]int{4,9,5}, []int{9,4,9,8,4}, []int{4,9}},
+		{[]int{4,9,5}, []int{9,4,9,8,4}, []int{9,4}},
 	}
 
 	for _, tc := range tcs {
