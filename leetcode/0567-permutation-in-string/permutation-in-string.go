@@ -14,6 +14,10 @@ package prob0567
 //The length of both given strings is in range [1, 10,000].
 //next challenge 76
 func checkInclusion(s1 string, s2 string) bool {
+	return slidingWindow(s1, s2)
+}
+
+func CheckInclusion(s1 string, s2 string) bool {
 	var hs [26]int
 	var count, start int
 	for _, v := range s1 {
@@ -43,6 +47,39 @@ func checkInclusion(s1 string, s2 string) bool {
 	return false
 }
 
-func CheckInclusion(s1 string, s2 string) bool {
-	return checkInclusion(s1, s2)
+func slidingWindow(s1, s2 string) (ans bool) {
+	m, n := len(s1), len(s2)
+	if m > n {
+		return
+	}
+	hs := [26]int{}
+	for i := 0; i < m; i++ {
+		hs[s1[i]-'a']++
+	}
+	count := m
+
+	for i, j := 0, 0; i < n; i++ {
+		hs[s2[i]-'a']--
+		if hs[s2[i]-'a'] >= 0 {
+			count--
+		}
+
+		if count == 0 {
+			ans = true
+			break
+		}
+
+		// sliding the window
+		if i-j+1 == m {
+			hs[s2[j]-'a']++
+			if hs[s2[j]-'a'] > 0 {
+				count++
+			}
+
+			j++
+		}
+
+	}
+
+	return
 }
