@@ -42,6 +42,8 @@ func twoPointers(s, t string) bool {
 			return false
 		}
 
+		// 这一步绝妙
+		// s[m], t[n] 如果只有一个存在,那么绝对是不相等的情况
 		if (m >= 0) != (n >= 0) {
 			return false
 		}
