@@ -1,0 +1,1 @@
+# [0674-longest-continuous-increasing-subsequence](https://leetcode.com/problems/longest-continuous-increasing-subsequence)
