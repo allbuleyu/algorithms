@@ -43,3 +43,21 @@ func max(a, b int) int {
 
 	return b
 }
+
+func minimumSubSquence(nums []int, target int) []int {
+	res := make([]int, 0)
+	for i := 0; i < len(nums) && target > 0; i++ {
+		for target - nums[i] < 0 && i < len(nums) -1 {
+			if target - nums[i+1] > 0 {
+				break
+			}
+
+			i++
+		}
+
+		target -= nums[i]
+		res = append(res, nums[i])
+	}
+
+	return res
+}

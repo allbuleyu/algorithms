@@ -27,3 +27,26 @@ func Test_findLengthOfLCIS(t *testing.T)  {
 		ast.Equal(tc.ans, findLengthOfLCIS(tc.input), "输入:%v", tc)
 	}
 }
+
+func Test_minimumSubSquence(t *testing.T)  {
+	ast := assert.New(t)
+
+	// test case
+	tcs := []struct{
+		input []int
+		target int
+		ans []int
+	}{
+		{[]int{200,150,150,100,100,50,50}, 82, []int{100}},
+		{[]int{200,150,150,100,100,50,50}, 361, []int{200,150,50}},
+		{[]int{200}, 82, []int{200}},
+		{[]int{200,50}, 82, []int{200}},
+
+	}
+
+	for _, tc := range tcs {
+		fmt.Printf("~~%v~~\n", tc)
+
+		ast.Equal(tc.ans, minimumSubSquence(tc.input, tc.target), "输入:%v", tc)
+	}
+}

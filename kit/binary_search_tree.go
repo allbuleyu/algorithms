@@ -70,6 +70,10 @@ func (bst *BinarySearchTree) PreOrder() []int {
 	return preOrderBST(bst.root)
 }
 
+func PreOrderBST(root *TreeNode) []int {
+	return preOrderBST(root)
+}
+
 func preOrderBST(root *TreeNode) []int {
 	if root == nil {
 		return nil
