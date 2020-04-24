@@ -1,5 +1,7 @@
 package challenge
 
+import "math"
+
 // https://leetcode.com/explore/featured/card/30-day-leetcoding-challenge/528/week-1/3285/
 
 
@@ -14,29 +16,46 @@ package challenge
 //
 //If you have figured out the O(n) solution, try coding another solution using the divide and conquer approach, which is more subtle.
 func maxSubArray(nums []int) int {
-	return helpDivideConquer(nums, 0, len(nums)-1)
+	return helpDp(nums)
+	//return helpDivideConquer(nums, 0, len(nums)-1)
 }
 
-func helpFun1(nums []int) int {
-
-	maxSum := nums[0]
+func helpDp(nums []int) int {
+	var m, maxSum int
+	m = nums[0]
+	maxSum = nums[0]
 	for i := 1; i < len(nums); i++ {
-		
+		m = max(m+nums[i], nums[i])
+		maxSum = max(maxSum, m)
 	}
 
 	return maxSum
 }
 
+// 非常精彩的解法
 func helpDivideConquer(nums []int, start, end int) int {
-	if start == end {
-		return nums[start]
+	if start > end {
+		return math.MinInt32
 	}
-	mid := (start+end)/2
 
-	leftSum := helpDivideConquer(nums, start, mid)
-	rightSum := helpDivideConquer(nums, mid+1, end)
+	m := start + (end-start)/2
+	ml := 0
+	mr := 0
 
-	return maxThree(leftSum, rightSum, leftSum+rightSum)
+	lmax := helpDivideConquer(nums, start, m-1)
+	rmax := helpDivideConquer(nums, m+1, end)
+
+	for i, sum := m-1, 0; i >= start; i-- {
+		sum += nums[i]
+		ml = max(sum, ml)
+	}
+
+	for i, sum := m+1, 0; i <= end; i++ {
+		sum += nums[i]
+		mr = max(sum, mr)
+	}
+
+	return max(max(lmax, rmax), ml+mr+nums[m])
 }
 
 func max(i, j int) int {
@@ -45,18 +64,4 @@ func max(i, j int) int {
 	}
 
 	return j
-}
-
-func maxThree(i, j, k int) int {
-	if i > j {
-		if i > k {
-			return i
-		}
-	}
-
-	if j > k {
-		return j
-	}
-
-	return k
 }
