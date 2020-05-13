@@ -45,6 +45,7 @@ package week2_3325
 //1 <= trust[i][0], trust[i][1] <= N
 
 func findJudge(N int, trust [][]int) int {
+	// 可以优化
 	if N == 1 {
 		return 1
 	}
