@@ -25,6 +25,10 @@ func removeKdigits(num string, k int) string {
 	return helpFunc1(num, k)
 }
 
+// 分析:
+// 1 num为升序排列好的
+// 2 num为降序排列好的
+// 3 num为乱序
 func helpFunc1(num string, k int) string {
 	res := make([]byte, 0)
 
