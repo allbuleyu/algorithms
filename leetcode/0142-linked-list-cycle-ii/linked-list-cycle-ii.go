@@ -14,6 +14,38 @@ type ListNode = kit.ListNode
 
 // http://www.cnblogs.com/hiddenfox/p/3408931.html 单向链表的各种变形
 func detectCycle(head *ListNode) *ListNode {
+	return helpFun1(head)
+}
+
+func helpFun1(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return nil
+	}
+
+	s, f := head, head
+	for {
+		if f == nil || f.Next == nil {
+			return nil
+		}
+
+		s = s.Next
+		f = f.Next.Next
+
+		if f == s {
+			break
+		}
+	}
+
+	s = head
+	for s != f {
+		s = s.Next
+		f = f.Next
+	}
+
+	return s
+}
+
+func helpFunc(head *ListNode) *ListNode {
 	if head == nil || head.Next == nil {
 		return nil
 	}

@@ -1,6 +1,9 @@
 package prob0414
 
-import "sort"
+import (
+	"math"
+	"sort"
+)
 
 //https://leetcode.com/problems/third-maximum-number/description/
 //Given a non-empty array of integers, return the third maximum number in this array. If it does not exist, return the maximum number. The time complexity must be in O(n).
@@ -74,4 +77,31 @@ func thirdMax1(nums []int) int {
 
 func ThirdMax(nums []int) int {
 	return thirdMax(nums)
+}
+
+func ffff(nums []int) int {
+	f := math.MinInt64
+	s := math.MinInt64
+	t := math.MinInt64
+	n := 0
+
+	for i := 0; i < len(nums); i++ {
+
+		if nums[i] > f {
+			f,s,t = nums[i], f, s
+			n++
+		}else if nums[i] > s && nums[i] < f {
+			s, t = nums[i], s
+			n++
+		}else if nums[i] > t && nums[i] < s {
+			t = nums[i]
+			n++
+		}
+	}
+
+	if n < 3 {
+		return f
+	}
+
+	return t
 }

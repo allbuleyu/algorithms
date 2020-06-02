@@ -1,13 +1,11 @@
 package kit
 
-import "container/heap"
-
 type priorityQueue struct {
 	queue []*TreeNode
 }
 
 func (p *priorityQueue) Put(node *TreeNode) {
-	heap.Fix()
+
 	panic("implement me")
 }
 

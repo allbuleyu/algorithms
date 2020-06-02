@@ -14,10 +14,12 @@ func TestProb0707(t *testing.T) {
 	myList.AddAtTail(3)
 	myList.AddAtIndex(1, 2)
 
-	myList.DeleteAtIndex(1)
+	x := myList.Get(1)
+	myList.DeleteAtIndex(0)
+	x = myList.Get(0)
 
 	//myList.AddAtIndex(2, 100)
 	//myList.DeleteAtIndex(1)
-	fmt.Println(myList.ConvertToArr())
+	fmt.Println(myList.listToArr(), x)
 
 }

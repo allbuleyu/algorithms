@@ -11,59 +11,58 @@ type ListNode = kit.ListNode
  * }
  */
 func removeNthFromEnd(head *ListNode, n int) *ListNode {
-	return solution2(head,n)
+	return twoPointers(head, n)
 }
 
-func solution2(head *ListNode, n int) *ListNode {
-	dummy := &ListNode{Next:head}
-	first, second := dummy, dummy
+// len list = n + first->nil 的长度
+func twoPointers(head *ListNode, n int) *ListNode {
+	pre := &ListNode{
+		Next:head,
+	}
+
+	first, second := pre, pre
+	for i := 0; i < n+1; i++ {
+		first = first.Next
+	}
 
 	for first != nil {
-		if n < 0 {
-			second = second.Next
-		}
-
 		first = first.Next
-		n--
+		second = second.Next
 	}
 
 	second.Next = second.Next.Next
-
-	return dummy.Next
+	return pre.Next
 }
 
-func solution1(head *ListNode, n int) *ListNode {
+func helpFunc1(head *ListNode, n int) *ListNode {
 	if head == nil {
 		return nil
 	}
 
-	fast := head
-	pre := &ListNode{Next:head}
+	pre := &ListNode{
+		Next:head,
+	}
+	s, f := pre, head
 	l := 0
-
-	for fast != nil && fast.Next != nil {
+	for f != nil && f.Next != nil {
 		l++
-
-		fast = fast.Next.Next
+		f = f.Next.Next
 	}
 
-	if fast == nil {
-		l *= 2
-	}else {
-		l = l * 2 + 1
+	// f.Next == nil 表示是奇数长度
+	totalLen := l * 2 + 1
+
+	// f == nil 表示偶数长度
+	if f == nil {
+		totalLen--
 	}
 
-	cur := pre
-	for l-n>=0 {
-		if l-n == 0 {
-			cur.Next = cur.Next.Next
-			break
-		}
-
-		l--
-		cur = cur.Next
+	for i := totalLen-n; i > 0; i-- {
+		s = s.Next
 	}
 
+	// del
+	s.Next = s.Next.Next
 
 	return pre.Next
 }

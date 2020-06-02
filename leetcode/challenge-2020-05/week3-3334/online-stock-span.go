@@ -35,23 +35,35 @@ package week3_3334
 //The total time limit for this problem has been reduced by 75% for C++, and 50% for all other languages.
 
 type StockSpanner struct {
-	m map[int]int
-
-	// sorted array
-	a []int
+	stk [][2]int
+	ptr int
 }
 
 
 func Constructor() StockSpanner {
-	return StockSpanner{
-		m:make(map[int]int),
-		a:make([]int, 0),
-	}
+	return StockSpanner{[][2]int{}, 0}
 }
 
 
-func (this *StockSpanner) Next(price int) int {
-
+func (s *StockSpanner) Next(price int) int {
+	ptr := s.ptr
+	cnt := 1
+	for ptr > 0 {
+		if price >= s.stk[ptr-1][0] {
+			cnt += s.stk[ptr-1][1]
+			ptr--
+		} else {
+			break
+		}
+	}
+	if ptr == len(s.stk) {
+		s.stk = append(s.stk, [2]int{price, cnt})
+	} else {
+		s.stk[ptr][0] = price
+		s.stk[ptr][1] = cnt
+	}
+	s.ptr = ptr + 1
+	return cnt
 }
 
 /**

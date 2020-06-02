@@ -2,134 +2,154 @@ package prob0707
 
 
 type MyLinkedList struct {
-	head *Node
+	head *ListNode
+	l int
+	tail *ListNode
 }
 
-type Node struct {
-	val interface{}
-	next *Node
+type ListNode struct {
+	Val int
+	Next *ListNode
 }
 
 
 /** Initialize your data structure here. */
 func Constructor() MyLinkedList {
-	return MyLinkedList{head:&Node{val:0}}
+	return MyLinkedList{}
 }
 
 
 /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
 func (this *MyLinkedList) Get(index int) int {
-	cur := this.head
-	for cur != nil && index >= 0 {
-		if index == 0 {
-			return cur.val.(int)
-		}
+	if index < 0 || index >= this.l {
+		return -1
+	}
 
-		cur = cur.next
+	cur := this.head
+	for index > 0 {
+		cur = cur.Next
 		index--
 	}
 
-	return -1
+	return cur.Val
 }
 
 
 /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
 func (this *MyLinkedList) AddAtHead(val int)  {
-	head := this.head
-	cur := &Node{val:val, next:head}
+	cur := &ListNode{
+		Val: val,
+		Next: this.head,
+	}
 
 	this.head = cur
+	if this.l == 0 {
+		this.tail = cur
+	}
+
+	this.l++
 }
 
 
 /** Append a node of value val to the last element of the linked list. */
 func (this *MyLinkedList) AddAtTail(val int)  {
-	cur := this.head
-	for cur != nil {
-		if cur.next == nil {
-			break
-		}
-
-		cur = cur.next
+	cur := &ListNode{
+		Val: val,
+		Next: nil,
 	}
 
-	cur.next = &Node{val:val}
+	if this.l == 0 {
+		this.head = cur
+		this.tail = cur
+		this.l++
+		return
+	}
+
+	this.tail.Next = cur
+	this.tail = this.tail.Next
+	this.l++
 }
 
 
-/** Add a node of value val before the index-th node in the linked list.
- *If index equals to the length of linked list, the node will be appended to the end of linked list.
- *If index is greater than the length, the node will not be inserted.
- */
+/** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
 func (this *MyLinkedList) AddAtIndex(index int, val int)  {
-	if index < 0 {
+	if index < 0 || index > this.l {
 		return
 	}
-	cur := this.head
 
 	if index == 0 {
-		this.head = &Node{val:val, next:cur}
+		this.AddAtHead(val)
+		return
 	}
 
-	headPrev := &Node{val:nil, next:this.head}
+	if index == this.l {
+		this.AddAtTail(val)
+		return
+	}
 
-	for headPrev != nil && index >= 0 {
-		if index == 0 {
-			break
-		}
+	pre := &ListNode{
+		Val:  0,
+		Next: this.head,
+	}
 
-		headPrev = headPrev.next
+	for index > 0 {
+		pre = pre.Next
 		index--
 	}
 
-	if headPrev == nil {
-		return
+	cur := &ListNode{
+		Val:  val,
+		Next: pre.Next,
 	}
 
-	headPrev.next = &Node{val:val, next:headPrev.next}
+	pre.Next = cur
+	this.l++
 }
 
 
 /** Delete the index-th node in the linked list, if the index is valid. */
 func (this *MyLinkedList) DeleteAtIndex(index int)  {
-	if index < 0 {
+	if index < 0 || index >= this.l {
 		return
 	}
 
+	pre := &ListNode{
+		Val:  0,
+		Next: this.head,
+	}
+
+	for i := index; i > 0; i-- {
+		pre = pre.Next
+	}
+
+	pre.Next = pre.Next.Next
+	this.l--
+
 	if index == 0 {
-		this.head = this.head.next
+		this.head = pre.Next
 	}
 
-	headPrev := &Node{next:this.head}
-	for index >= 0 && headPrev.next != nil {
-		if index == 0 {
-			headPrev.next = headPrev.next.next
-		}
+	if this.l == index && this.l != 0 {
+		this.tail = pre
+	}
 
-		headPrev = headPrev.next
-		index--
+	if this.l == 0 {
+		this.tail = nil
 	}
 }
 
-func (this *MyLinkedList) FmtList() {
+func (this *MyLinkedList) listToArr() []int {
+	head := this.head
+	nums := make([]int, 0)
 
-}
+	for head != nil {
 
-func (this *MyLinkedList) ConvertToArr() []int {
-	cur := this.head
-	res := make([]int, 0)
-
-	for cur != nil {
-		v, ok := cur.val.(int)
-		if ok {
-			res = append(res, v)
-		}
-		cur = cur.next
+		nums = append(nums, head.Val)
+		head = head.Next
 	}
 
-	return res
+	return nums
 }
-
 
 /**
  * Your MyLinkedList object will be instantiated and called as such:
