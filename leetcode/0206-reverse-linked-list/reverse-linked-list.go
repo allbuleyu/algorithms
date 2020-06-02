@@ -11,20 +11,14 @@ type ListNode = kit.ListNode
  * }
  */
 func reverseList(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return head
-	}
+	dummy := &ListNode{Next:nil}
 
-	var reverseHead *ListNode
 	for head != nil {
-
-		tmp := head
-		head = head.Next
-
-		tmp.Next = reverseHead
-		reverseHead = tmp
-		//reverseHead, tmp.Next = tmp, reverseHead
+		tmp := head.Next
+		head.Next = dummy.Next
+		dummy.Next = head
+		head = tmp
 	}
 
-	return reverseHead
+	return dummy.Next
 }
