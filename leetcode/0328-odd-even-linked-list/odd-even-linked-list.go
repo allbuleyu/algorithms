@@ -63,3 +63,37 @@ func iterateOptimize(head *ListNode) *ListNode {
 
 	return head
 }
+
+
+func helpStupid(head *ListNode) *ListNode {
+	var oddTail, evenHead *ListNode
+
+	oddTail = &ListNode{Next:nil}
+	evenHead = nil
+	evenTail := &ListNode{Next:nil}
+
+	cur := head
+	for i := 1; cur != nil; i++ {
+		if i % 2 != 0 {
+			oddTail.Next = cur
+			oddTail = oddTail.Next
+
+		}else {
+			if evenHead == nil {
+				evenHead = cur
+			}
+
+			evenTail.Next = cur
+			evenTail = evenTail.Next
+		}
+		cur = cur.Next
+	}
+
+	if evenTail != nil {
+		evenTail.Next = nil
+	}
+
+	oddTail.Next = evenHead
+
+	return head
+}

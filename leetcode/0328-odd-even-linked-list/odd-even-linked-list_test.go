@@ -24,7 +24,7 @@ func Test_oddEvenList(t *testing.T)  {
 
 	for _, tc := range tcs {
 		fmt.Printf("~~%v~~\n", tc)
-		actual := kit.TransferNodes(oddEvenList(kit.CreateNodes(tc.input)))
+		actual := kit.TransferNodes(helpStupid(kit.CreateNodes(tc.input)))
 		ast.Equal(tc.ans, actual, "输入:%v", tc)
 	}
 }
