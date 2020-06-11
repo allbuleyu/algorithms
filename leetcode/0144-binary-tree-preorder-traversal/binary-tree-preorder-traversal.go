@@ -12,47 +12,55 @@ type TreeNode = kit.TreeNode
  * }
  */
 func preorderTraversal(root *TreeNode) []int {
-	return preOrderIterate(root)
+	return helpIterate(root)
 }
 
-// 前序遍历
-func preOrder(root *TreeNode, res *[]int) {
-	if root == nil {
-		return
-	}
-
-	*res = append(*res, root.Val)
-	if root.Left != nil {
-		preOrder(root.Left, res)
-	}
-
-	if root.Right != nil {
-		preOrder(root.Right, res)
-	}
-
-}
-
-// 迭代法前序遍历
-func preOrderIterate(root *TreeNode) []int {
-	if root == nil {
-		return nil
-	}
-
+func helpIterate(root *TreeNode) []int {
 	res := make([]int, 0)
 	stack := make([]*TreeNode, 0)
 	node := root
 
-	for node != nil || len(stack) != 0 {
-		for node != nil {
-			res = append(res, node.Val)		// Add before going to children
+	for len(stack) > 0 || node != nil {
+		if node != nil {
 			stack = append(stack, node)
+			res = append(res, node.Val)
 			node = node.Left
+		}else {
+			node = stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+			node = node.Right
 		}
-
-		node = stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
-		node = node.Right
 	}
 
 	return res
+}
+
+func helpMorrisTraversal(root *TreeNode) []int {
+	ans := make([]int, 0)
+	cur := root
+	for cur != nil {
+
+		if cur.Left != nil {
+			precursor := cur.Left
+			for precursor.Right != nil && precursor.Right == cur {
+				precursor = precursor.Right
+			}
+
+			if precursor.Right == cur {
+
+				precursor.Right = nil
+				cur = cur.Right
+			}else {
+				ans = append(ans, cur.Val)
+				precursor.Right = cur
+				cur = cur.Left
+			}
+
+		}else {
+			ans = append(ans, cur.Val)
+			cur = cur.Right
+		}
+	}
+
+	return ans
 }
