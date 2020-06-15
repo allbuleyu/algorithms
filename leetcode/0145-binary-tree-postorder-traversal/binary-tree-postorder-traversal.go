@@ -12,48 +12,102 @@ type TreeNode = kit.TreeNode
  * }
  */
 func postorderTraversal(root *TreeNode) []int {
-	return postOrderIterate(root)
+	return helpIteration1(root)
 }
 
-func postOrder(root *TreeNode, res *[]int) {
-	if root == nil {
-		return
+func helpMirrorTraversal(root *TreeNode) []int {
+	ans := make([]int, 0)
+	node := root
+	for node != nil {
+		if node.Right != nil {
+			precursor := node.Right
+			for precursor.Left != nil && node != precursor.Left {
+				precursor = precursor.Left
+			}
+
+			if node == precursor.Left {
+				precursor.Left = nil
+				node = node.Left
+			}else {
+				ans = append(ans, node.Val)
+				precursor.Left = node
+				node = node.Right
+			}
+		}else {
+			ans = append(ans, node.Val)
+			node = node.Left
+		}
 	}
 
-	if root.Left != nil {
-		postOrder(root.Left, res)
+	for i, j := 0, len(ans)-1; i < j; i, j = i+1, j-1 {
+		ans[i], ans[j] = ans[j], ans[i]
 	}
 
-	if root.Right != nil {
-		postOrder(root.Right, res)
-	}
-	*res = append(*res, root.Val)
+	return ans
 }
 
-// 迭代法,后续遍历
-func postOrderIterate(root *TreeNode) []int {
+
+func helpIteration2(root *TreeNode) []int {
+	ans := make([]int, 0)
+	stack := make([]*TreeNode, 0)
+	node := root
+	for len(stack) > 0 || node != nil {
+		if node.Right != nil {
+			ans = append(ans, node.Val)
+
+			stack = append(stack, node)
+			node = node.Right
+		}else {
+			node = stack[len(stack)-1]
+			stack = stack[:len(stack)-1]
+
+			node = node.Left
+		}
+	}
+
+	for i, j := 0, len(ans)-1; i < j; i, j = i+1, j-1 {
+		ans[i], ans[j] = ans[j], ans[i]
+	}
+
+	return ans
+}
+
+func helpIteration1(root *TreeNode) []int {
+	ans := make([]int, 0)
+	stack := make([]*TreeNode, 0)
+	stack = append(stack, root)
+	head := root
+	for len(stack) > 0 {
+		t := stack[len(stack)-1]
+		if (t.Left != nil && t.Right != nil) || t.Left == head || t.Right == head {
+			ans = append(ans, t.Val)
+			stack = stack[:len(stack)-1]
+			head = t
+		}else {
+			if t.Right != nil {
+				stack = append(stack, t.Right)
+			}
+
+			if t.Left != nil {
+				stack = append(stack, t.Left)
+			}
+		}
+	}
+
+	return ans
+}
+
+
+func helpRecursionTraversal(root *TreeNode) []int {
 	if root == nil {
 		return nil
 	}
-	res := make([]int, 0)
 
-	stack := make([]*TreeNode, 0)
-	node := root
-	for node != nil || len(stack) != 0 {
-		for node != nil {
-			res = append(res, node.Val)		// Add after all left children
-			stack = append(stack, node)
-			node = node.Right
-		}
+	ans := make([]int, 0)
 
-		node = stack[len(stack)-1]
-		stack = stack[:len(stack)-1]
-		node = node.Left
-	}
+	ans = append(ans, helpRecursionTraversal(root.Left)...)
+	ans = append(ans, helpRecursionTraversal(root.Left)...)
+	ans = append(ans, root.Val)
 
-	for i, j := 0, len(res)-1; i < j; i, j = i+1,j-1 {
-		res[i], res[j] = res[j], res[i]
-	}
-
-	return res
+	return ans
 }
