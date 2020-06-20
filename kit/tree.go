@@ -216,6 +216,10 @@ func preOrderIterate(root *TreeNode) []int {
 	return res
 }
 
+func InOrder(root *TreeNode) []int {
+	return inOrderIterate(root)
+}
+
 // 中序遍历
 func inOrder(root *TreeNode, res *[]int) {
 	if root == nil {
