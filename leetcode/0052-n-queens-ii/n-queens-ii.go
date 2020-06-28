@@ -1,6 +1,6 @@
-package prob0051
+package prob0052
 
-func solveNQueens(n int) [][]string {
+func totalNQueens(n int) int {
 	board := make([][]byte, n)
 	for i := 0; i < n; i++ {
 		board[i] = make([]byte, n)
@@ -9,36 +9,25 @@ func solveNQueens(n int) [][]string {
 		}
 	}
 
-	queens := make([][]string, 0)
-	helpBacktracking(0, &board, &queens)
+	ans := 0
+	helpBacktracking(0, &board, &ans)
 
-	return queens
+	return ans
 }
 
-
-func helpBacktracking(curRow int, board *[][]byte, queens *[][]string) {
+func helpBacktracking(curRow int, board *[][]byte, ans *int) {
 	if curRow == len(*board) {
-		appendQueens(queens, board)
+		*ans++
 		return
 	}
 
 	for i := 0; i < len(*board); i++ {
 		if isValid(board, curRow, i) {
 			(*board)[curRow][i] = 'Q'
-			helpBacktracking(curRow+1, board, queens)
+			helpBacktracking(curRow+1, board, ans)
 			(*board)[curRow][i] = '.'
 		}
 	}
-}
-
-func appendQueens(queens *[][]string, board *[][]byte) {
-	n := len(*board)
-	ap := make([]string, n)
-	for i := 0; i < n; i++ {
-		ap[i] = string((*board)[i])
-	}
-
-	*queens = append(*queens, ap)
 }
 
 
