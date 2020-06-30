@@ -89,9 +89,9 @@ func Benchmark_isValidSudoku(b *testing.B) {
 	}
 
 	for _, tt := range tests {
-
+		seen := make(map[string]bool)
 		b.Run("isValidOptimize", func(b *testing.B) {
-			seen := make(map[string]bool)
+
 			for i := 0; i < 9; i++ {
 				for j := 0; j < 9; j++ {
 					isValidOptimize(&tt.args, i, j, seen)
