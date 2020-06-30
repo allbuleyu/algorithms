@@ -9,7 +9,8 @@ import (
 )
 
 func Test_pathSum(t *testing.T) {
-
+	fmt.Println('(', ')')
+	return
 	tcs := []struct{
 		input []int
 		input1 []int
@@ -39,6 +40,12 @@ func Test_pathSum(t *testing.T) {
 
 			[]int{0,8},
 			false,
+		},
+		{
+			[]int{1},
+
+			[]int{1},
+			true,
 		},
 	}
 
