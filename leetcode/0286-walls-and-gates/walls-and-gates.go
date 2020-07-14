@@ -20,7 +20,7 @@ func wallsAndGates(rooms [][]int)  {
 	bfs(rooms)
 }
 
-// 现阶段的queue的实现 queue[0], queue[:1] 速度真的感人,后续自己实现高效率的queue
+// 现阶段的queue的实现 queue[0], queue[1:] 速度真的感人,后续自己实现高效率的queue
 func bfs(rooms [][]int) {
 	m := len(rooms)
 	n := len(rooms[0])
