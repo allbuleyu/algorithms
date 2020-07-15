@@ -26,6 +26,6 @@ func Test_prb0014(t *testing.T)  {
 	for _, tc := range tcs {
 		fmt.Printf("~~%v~~\n", tc)
 
-		ast.Equal(tc.ans, strstr1(tc.input, tc.needle), "输入:%v", tc)
+		ast.Equal(tc.ans, strStr(tc.input, tc.needle), "输入:%v", tc)
 	}
 }
