@@ -1,0 +1,1 @@
+# [0050-powx-n](https://leetcode.com/problems/powx-n)
