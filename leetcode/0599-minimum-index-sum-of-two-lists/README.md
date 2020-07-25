@@ -1,0 +1,1 @@
+# [0599-minimum-index-sum-of-two-lists](https://leetcode.com/problems/minimum-index-sum-of-two-lists)
