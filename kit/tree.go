@@ -41,7 +41,9 @@ type Trees struct {
 func NewTrees(ints []int) Trees {
 	n := len(ints)
 	if n == 0 {
-		panic("tree array can not be zero")
+		return Trees{
+			Root:    nil,
+		}
 	}
 
 	root := &TreeNode{
@@ -174,6 +176,10 @@ func (t Trees) NormalDepth() int {
 	return t.depth
 }
 
+func PreOrder(root *TreeNode) []int {
+	return preorderMorris(root)
+}
+
 // 前序遍历
 func preOrder(root *TreeNode, res *[]int) {
 	if root == nil {
@@ -216,8 +222,40 @@ func preOrderIterate(root *TreeNode) []int {
 	return res
 }
 
+func preorderMorris(root *TreeNode) []int {
+	ans := make([]int, 0)
+	if root == nil {
+		return ans
+	}
+
+	node := root
+	for node != nil {
+		if node.Left != nil {
+			prev := node.Left
+			for prev.Right != nil && prev.Right != node {
+				prev = prev.Right
+			}
+
+			if prev.Right == node {
+				prev.Right = nil
+				node = node.Right
+			}else {
+				ans = append(ans, node.Val)
+				prev.Right = node
+				node = node.Left
+			}
+
+		}else {
+			ans = append(ans, node.Val)
+			node = node.Right
+		}
+	}
+
+	return ans
+}
+
 func InOrder(root *TreeNode) []int {
-	return inOrderIterate(root)
+	return inorderMorris(root)
 }
 
 // 中序遍历
@@ -261,6 +299,43 @@ func inOrderIterate(root *TreeNode) []int {
 	}
 
 	return res
+}
+
+func inorderMorris(root *TreeNode) []int {
+	ans := make([]int, 0)
+	if root == nil {
+		return ans
+	}
+
+	node := root
+	for node != nil {
+		if node.Left != nil {
+			prev := node.Left
+			for prev.Right != nil && prev.Right != node {
+				prev = prev.Right
+			}
+
+			if prev.Right == node {
+				ans = append(ans, node.Val)
+
+				prev.Right = nil
+				node = node.Right
+			}else {
+				prev.Right = node
+				node = node.Left
+			}
+
+		}else {
+			ans = append(ans, node.Val)
+			node = node.Right
+		}
+	}
+
+	return ans
+}
+
+func PostOrder(root *TreeNode) []int {
+	return postorderMorris(root)
 }
 
 func postOrder(root *TreeNode, res *[]int) {
@@ -308,3 +383,43 @@ func postOrderIterate(root *TreeNode) []int {
 }
 
 // 竟然还有	莫里斯遍历法,只使用常量的空间
+func postorderMorris(root *TreeNode) []int {
+	ans := make([]int, 0)
+	if root == nil {
+		return ans
+	}
+
+	node := root
+	for node != nil {
+		if node.Right != nil {
+			prev := node.Right
+			for prev.Left != nil && prev.Left != node {
+				prev = prev.Left
+			}
+
+			if prev.Left == node {
+				prev.Left = nil
+				node = node.Left
+			}else {
+				ans = append(ans, node.Val)
+				prev.Left = node
+				node = node.Right
+			}
+
+		}else {
+			ans = append(ans, node.Val)
+			node = node.Left
+		}
+	}
+
+	intReverse(ans)
+	return ans
+}
+
+func intReverse(nums []int) {
+	for i, j := 0, len(nums)-1; i < j; {
+		nums[i], nums[j] = nums[j], nums[i]
+		i++
+		j--
+	}
+}
