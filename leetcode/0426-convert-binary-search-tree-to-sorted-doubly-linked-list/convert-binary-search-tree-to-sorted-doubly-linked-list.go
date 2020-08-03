@@ -27,10 +27,6 @@ func helpMorris(root *Node) *Node {
 	var p *Node
 
 	for node != nil {
-		if node.Left == nil && node.Right == nil {
-			break
-		}
-
 		if node.Left != nil {
 			prev := node.Left
 			for prev.Right != nil && prev.Right != node {
@@ -66,9 +62,9 @@ func helpMorris(root *Node) *Node {
 		}
 	}
 
-	if node != nil && head.Right != nil {
-		head.Right.Left = node
-		node.Right = head.Right
+	if head.Right != nil {
+		head.Right.Left = p
+		p.Right = head.Right
 	}
 
 	return head.Right
