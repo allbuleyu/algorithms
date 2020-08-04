@@ -16,7 +16,7 @@ func Test_treeToDoublyList(t *testing.T) {
 	}{
 		{[]int{4,2,5,1,3},[]int{1,2,3,4,5}},
 		//{[]int{2,1},[]int{1,2}},
-		//{[]int{2,1,3},[]int{1,2,3}},
+		{[]int{2,1,3},[]int{1,2,3}},
 		//{[]int{},[]int{}},
 	}
 

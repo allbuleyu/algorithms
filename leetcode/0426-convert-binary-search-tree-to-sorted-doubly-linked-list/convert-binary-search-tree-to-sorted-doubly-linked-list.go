@@ -17,7 +17,7 @@ func treeToDoublyList(root *Node) *Node {
 		return root
 	}
 
-	return helpMorris(root)
+	return helper(root)
 }
 
 // 用莫里斯中序遍历法
@@ -68,4 +68,36 @@ func helpMorris(root *Node) *Node {
 	}
 
 	return head.Right
+}
+
+// 递归方式处理,还挺有意思的
+var head, tail *Node
+func helper(root *Node) *Node {
+	// 因为是全局变量,所以在执行test case 的时候,要把head, tail重新初始化一下
+	head = nil
+	tail = nil
+
+	helpRecursion(root)
+	head.Left = tail
+	tail.Right = head
+
+	return head
+}
+
+func helpRecursion(root *Node) {
+	if root == nil {
+		return
+	}
+
+	helpRecursion(root.Left)
+
+	if tail == nil {
+		head = root
+	}else {
+		tail.Right = root
+		root.Left = tail
+	}
+
+	tail = root
+	helpRecursion(root.Right)
 }
