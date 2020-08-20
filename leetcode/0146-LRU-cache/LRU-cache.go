@@ -30,6 +30,10 @@ func (this *LRUCache) Get(key int) int {
 }
 
 func moveToHead(tail, node *myList) {
+	if tail == node {
+		return
+	}
+
 	// if node.next == nil imply node is new NODE
 	if node.next != nil {
 		node.next.prev = node.prev
