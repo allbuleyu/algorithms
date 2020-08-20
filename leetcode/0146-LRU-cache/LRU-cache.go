@@ -1,67 +1,86 @@
 package prob0146
 
-//Design and implement a data structure for Least Recently Used (LRU) cache. It should support the following operations: get and put.
-//
-//get(key) - Get the value (will always be positive) of the key if the key exists in the cache, otherwise return -1.
-//put(key, value) - Set or insert the value if the key is not already present. When the cache reached its capacity, it should invalidate the least recently used item before inserting a new item.
-//
-//The cache is initialized with a positive capacity.
-//
-//Follow up:
-//Could you do both operations in O(1) time complexity?
-//
-//Example:
-//
-//LRUCache cache = new LRUCache( 2 /* capacity */ );
-//
-//cache.put(1, 1);
-//cache.put(2, 2);
-//cache.get(1);       // returns 1
-//cache.put(3, 3);    // evicts key 2
-//cache.get(2);       // returns -1 (not found)
-//cache.put(4, 4);    // evicts key 1
-//cache.get(1);       // returns -1 (not found)
-//cache.get(3);       // returns 3
-//cache.get(4);       // returns 4
-
-
 type LRUCache struct {
-	head *node
-	tail *node
-	store map[int]*node
-	cap int
+	tail *myList
+	mapping map[int]*myList
+	capacity int
 }
 
-type node struct {
-	prev *node
-	next *node
-	key int
-	val int
+type myList struct {
+	k, v int
+	prev, next *myList
 }
-
 
 func Constructor(capacity int) LRUCache {
-	return LRUCache{
-		store: make(map[int]*node),
-		cap:   capacity,
-	}
+	return LRUCache{mapping: make(map[int]*myList), capacity: capacity}
 }
 
 
 func (this *LRUCache) Get(key int) int {
-	store := this.store
-	if nd, ok := store[key];ok {
-
-
-		return nd.val
+	if _, ok := this.mapping[key]; !ok {
+		return -1
 	}
 
-	return -1
+	node := this.mapping[key]
+
+	moveToHead(this.tail, node)
+	this.tail = node
+
+	return node.v
 }
 
+func moveToHead(tail, node *myList) {
+	// if node.next == nil imply node is new NODE
+	if node.next != nil {
+		node.next.prev = node.prev
+		node.prev.next = node.next
+	}
+
+	head := tail.next
+	tail.next = node
+	node.prev = tail
+
+	head.prev = node
+	node.next = head
+}
 
 func (this *LRUCache) Put(key int, value int)  {
+	if node, ok := this.mapping[key]; ok {
+		node.v = value
 
+		moveToHead(this.tail, node)
+
+		this.tail = node
+		return
+	}
+
+	if this.capacity == 0 {
+		next := this.tail.next
+		delete(this.mapping, next.k)
+
+		next.k = key
+		next.v = value
+
+		this.mapping[key] = next
+
+		this.tail = next
+
+		return
+	}
+
+	node := &myList{k: key, v: value}
+	if this.tail == nil {
+		node.prev = node
+		node.next = node
+		this.tail = node
+	}else {
+		moveToHead(this.tail, node)
+
+		this.tail = node
+	}
+
+	this.capacity--
+	this.mapping[key] = node
 }
 
 
