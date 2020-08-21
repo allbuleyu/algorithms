@@ -2,44 +2,64 @@ package prob0451
 
 import "sort"
 
-//https://leetcode.com/problems/sort-characters-by-frequency/description/
-//Given a string, sort it in decreasing order based on the frequency of characters.
-//
-//Example 1:
-//
-//Input:
-//"tree"
-//
-//Output:
-//"eert"
-//
-//Explanation:
-//'e' appears twice while 'r' and 't' both appear once.
-//So 'e' must appear before both 'r' and 't'. Therefore "eetr" is also a valid answer.
-//Example 2:
-//
-//Input:
-//"cccaaa"
-//
-//Output:
-//"cccaaa"
-//
-//Explanation:
-//Both 'c' and 'a' appear three times, so "aaaccc" is also a valid answer.
-//Note that "cacaca" is incorrect, as the same characters must be together.
-//Example 3:
-//
-//Input:
-//"Aabb"
-//
-//Output:
-//"bbAa"
-//
-//Explanation:
-//"bbaA" is also a valid answer, but "Aabb" is incorrect.
-//Note that 'A' and 'a' are treated as two different characters.
-//Next chanllenge 347
 func frequencySort(s string) string {
+	return helpBucketSort(s)
+}
+
+func helpBucketSort(s string) string {
+	hs := [128]int{}
+	maxLen := 0
+	for i := 0; i < len(s); i++ {
+		v := hs[s[i]]
+		hs[s[i]]++
+
+		maxLen = max(maxLen, v+1)
+	}
+
+	bucket := make(map[int][]byte)
+	for i := 0; i < 127; i++ {
+		if hs[i] == 0 {
+			continue
+		}
+
+		if _, ok := bucket[hs[i]]; !ok {
+			bucket[hs[i]] = make([]byte, 0)
+		}
+
+		bucket[hs[i]] = append(bucket[hs[i]], byte(i))
+	}
+
+	bb := make([]byte, 0, len(s))
+	for i := maxLen; i > 0; i-- {
+		if bs, ok := bucket[i]; ok {
+			for j := 0; j < len(bs); j++ {
+				bb = append(bb, generateString(bs[j], i)...)
+			}
+		}
+	}
+
+	return string(bb)
+}
+
+func generateString(b byte, t int) []byte {
+	bb := make([]byte, t)
+	for i := 0; i < t; i++ {
+		bb[i] = b
+	}
+
+	return bb
+}
+
+func max(x, y int) int {
+	if x > y {
+		return x
+	}
+
+	return y
+}
+
+// hash map + sort
+func frequencySort1(s string) string {
 	r := ['z' + 1]int{}
 	for i := range s {
 		r[s[i]]++
