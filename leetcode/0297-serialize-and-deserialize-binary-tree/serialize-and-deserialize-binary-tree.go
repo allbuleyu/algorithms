@@ -7,6 +7,8 @@ import (
 	"strings"
 )
 
+type TreeNode = kit.TreeNode
+
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -15,10 +17,6 @@ import (
  *     Right *TreeNode
  * }
  */
-type TreeNode = kit.TreeNode
-
-
-
 type Codec struct {
 
 }
@@ -30,11 +28,11 @@ func Constructor() Codec {
 // Serializes a tree to a single string.
 func (this *Codec) serialize(root *TreeNode) string {
 	if root == nil {
-		return "[]"
+		return ""
 	}
 
 	b := &bytes.Buffer{}
-	doSerializePreOrder(root, b)
+	doSerializeBfs(root, b)
 	ans := b.Bytes()
 
 	return string(ans[:len(ans)-1])
@@ -75,6 +73,35 @@ func doSerializeInorder(root *TreeNode, b *bytes.Buffer) {
 	doSerializeInorder(root.Right, b)
 }
 
+func doSerializeBfs(root *TreeNode, b *bytes.Buffer) {
+	queue := make([]*TreeNode, 0)
+	var node *TreeNode
+	queue = append(queue, root)
+	for node != nil || len(queue) > 0 {
+		node = queue[0]
+		queue = queue[1:]
+		if node == nil {
+			b.WriteByte('#')
+			b.WriteByte(',')
+			continue
+		}
+
+		b.WriteString(strconv.Itoa(node.Val))
+		b.WriteByte(',')
+		queue = append(queue, node.Left, node.Right)
+	}
+}
+
+// Deserializes your encoded data to tree.
+func (this *Codec) deserialize(data string) *TreeNode {
+	if data == "" {
+		return nil
+	}
+
+	d := strings.Split(data, ",")
+	return doDeserializeBfs(&d)
+}
+
 // result not reverse
 func doSerializePostorder(root *TreeNode, b *bytes.Buffer) {
 	if root == nil {
@@ -87,12 +114,6 @@ func doSerializePostorder(root *TreeNode, b *bytes.Buffer) {
 	b.WriteByte(',')
 	doSerializePostorder(root.Right, b)
 	doSerializePostorder(root.Left, b)
-}
-
-// Deserializes your encoded data to tree.
-func (this *Codec) deserialize(data string) *TreeNode {
-	d := strings.Split(data, ",")
-	return doDeserializePreOrder(&d)
 }
 
 func doDeserialize(s string, do func(*[]string) *TreeNode) *TreeNode {
@@ -138,6 +159,39 @@ func doDeserializePostorder(data *[]string) *TreeNode {
 	return root
 }
 
+func doDeserializeBfs(data *[]string) *TreeNode {
+	d := *data
+
+	v,_ := strconv.Atoi(d[0])
+	root := &TreeNode{Val:v}
+	var node *TreeNode
+	queue := make([]*TreeNode, 0)
+	queue = append(queue, root)
+	for i := 1; i < len(d) && len(queue) > 0; {
+		node = queue[0]
+		queue = queue[1:]
+
+		var left, right *TreeNode
+		if d[i] != "#" {
+			v1, _ := strconv.Atoi(d[i])
+			left = &TreeNode{Val:v1}
+			queue = append(queue, left)
+		}
+
+		if d[i+1] != "#" {
+			v2, _ := strconv.Atoi(d[i+1])
+			right = &TreeNode{Val:v2}
+			queue = append(queue, right)
+		}
+
+		node.Left = left
+		node.Right = right
+
+		i += 2
+	}
+
+	return root
+}
 
 /**
  * Your Codec object will be instantiated and called as such:
