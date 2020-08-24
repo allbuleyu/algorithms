@@ -14,8 +14,9 @@ func TestCodec_serialize(t *testing.T) {
 	tcs := []struct{
 		input []int
 		ans string
+		dAns []int
 	}{
-		{[]int{1,2,3,kit.Null,kit.Null,4,5},"1,2,#,#,3,4,#,#,5,#,#"},
+		{[]int{1,2,3,kit.Null,kit.Null,4,5},"1,2,#,#,3,4,#,#,5,#,#", []int{1,2,3,4,5}},
 	}
 
 	codec := Constructor()
@@ -25,7 +26,7 @@ func TestCodec_serialize(t *testing.T) {
 
 		ast.Equal(tc.ans, codec.serialize(tree.Root), "输入:%v", tc)
 		root := codec.deserialize(tc.ans)
-		ast.Equal(tc.input, kit.PreOrder(root), "输入:%v", tc)
+		ast.Equal(tc.dAns, kit.PreOrder(root), "输入:%v", tc)
 	}
 }
 
