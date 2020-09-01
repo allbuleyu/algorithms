@@ -1,39 +1,55 @@
 package prob0074
 
 func searchMatrix(matrix [][]int, target int) bool {
-	if len(matrix) == 0 {
+	if len(matrix) == 0 || len(matrix[0]) == 0 {
 		return false
 	}
 
-	if len(matrix) == 1 {
-		return binarySearch(matrix[0], target, 0, len(matrix[0])-1)
-	}
-
-	index := 0
-	for i := 1; i < len(matrix); i++ {
-		if matrix[i][0] > target {
-			index = i-1
-			break
-		}
-		index = i
-	}
-
-	return binarySearch(matrix[index], target, 0, len(matrix[index]) -1)
+	return binSrch(matrix, target)
 }
 
-func binarySearch(nums []int, target, start, end int) bool {
-	if start == end {
-		return false
-	}
-	res := false
-	mid := (start + end) / 2
-	if nums[mid] < target {
-		res = binarySearch(nums, target, mid+1, end)
-	}else if nums[mid] > target {
-		res = binarySearch(nums, target, start, mid-1)
-	}else {
-		res = true
+func helpZigzag(matrix [][]int, target int) bool {
+	i := len(matrix)-1
+	j := 0
+
+	for i >= 0 && j < len(matrix[0]) {
+		if matrix[i][j] == target {
+			return true
+		}else if matrix[i][j] < target {
+			j++
+		}else {
+			i--
+		}
 	}
 
-	return res
+	return false
+}
+
+
+func binSrch(matrix [][]int, target int) bool {
+	left, right := 0, len(matrix[0])-1
+	row := 0
+	for row < len(matrix) {
+		if matrix[row][left] <= target && matrix[row][right] >= target {
+			break
+		}
+		row++
+	}
+
+	if row == len(matrix) {
+		return false
+	}
+
+	for left <= right {
+		mid := left + (right-left)/2
+		if matrix[row][mid] == target {
+			return true
+		}else if matrix[row][mid] < target {
+			left = mid + 1
+		}else {
+			right = mid - 1
+		}
+	}
+
+	return false
 }
