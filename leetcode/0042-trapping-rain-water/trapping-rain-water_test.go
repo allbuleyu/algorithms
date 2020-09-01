@@ -12,13 +12,15 @@ func Test_trap(t *testing.T) {
 		input []int
 		ans int
 	}{
+		//{
+		//	[]int{0,1,0,2,1,0,1,3,2,1,2,1},
+		//	6,
+		//},
 		{
-			[]int{0,1,0,2,1,0,1,3,2,1,2,1},
-			6,
+			[]int{4,0,1,0,4,4,2,0,8},
+			17,
 		},
-
 	}
-
 
 	ast := assert.New(t)
 	for _, tc := range tcs {

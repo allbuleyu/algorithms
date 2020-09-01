@@ -1,69 +1,87 @@
 package prob0042
 
 func trap(height []int) int {
-	return bruteForce(height)
+	return helpStackOptimize(height)
 }
 
-func twoPointer(height []int) int {
-	var ans, left, right, leftMax, rightMax int
-	right=len(height)-1
+// 还有dp和twopointers 的解法
 
-	for left < right {
-		if height[left] < height[right] {
-			if height[left] > leftMax {
-				leftMax = height[left]
+// mono stack
+func helpStackOptimize(h []int) int {
+	stack := make([]int, 0)
+	ans := 0
 
-			}else {
-				ans += leftMax - height[left]
+	for i := 0; i < len(h); i++ {
+		// 这里不需要考虑 h[i] == stack.top的情况,因为minH-curH == 0 结果不会有改变
+		for len(stack) > 0 && h[stack[len(stack)-1]] < h[i] {
+
+			// 当前高度
+			curH := h[stack[len(stack)-1]]
+			stack = stack[:len(stack)-1:cap(stack)]
+
+			if len(stack) == 0 {
+				break
 			}
 
-			left++
-		}else {
-			if height[right] > rightMax {
-				rightMax = height[right]
-			}else{
-				ans += rightMax-height[right]
-			}
-			right--
+			// 左边墙高度的索引
+			pIndex := stack[len(stack)-1]
+
+			// 两边的墙取高度低的算雨水面积
+			minH := min(h[pIndex], h[i])
+
+			//
+			ans += (minH-curH) * (i-pIndex-1)
 		}
+
+
+		stack = append(stack, i)
 	}
 
 	return ans
 }
 
-func bruteForce(height []int) int {
-	var ans, maxLeft, maxRight int
+func helpStack(h []int) int {
+	stack := make([]int, 0)
+	ans := 0
 
-	for i := 0; i < len(height); i++ {
-		maxLeft=0
-		maxRight=0
+	for i := 0; i < len(h); i++ {
+		if len(stack) > 0 && h[stack[len(stack)-1]] <= h[i] {
+			if h[stack[len(stack)-1]] == h[i] {
+				stack[len(stack)-1] = i
+				continue
+			}
 
-		for j := i; j > 0; j-- {
-			maxLeft = max(maxLeft, height[j])
+			for h[stack[len(stack)-1]] <= h[i] {
+
+				// 当前高度
+				curH := h[stack[len(stack)-1]]
+				stack = stack[:len(stack)-1:cap(stack)]
+
+				if len(stack) == 0 {
+					break
+				}
+
+				// 左边墙高度的索引
+				pIndex := stack[len(stack)-1]
+
+				// 两边的墙取高度低的算雨水面积
+				minH := min(h[pIndex], h[i])
+
+				//
+				ans += (minH-curH) * (i-pIndex-1)
+			}
 		}
 
-		for j := i; j < len(height); j++ {
-			maxRight = max(maxRight, height[j])
-		}
-
-		ans += min(maxLeft, maxRight) - height[i]
+		stack = append(stack, i)
 	}
 
 	return ans
-}
-
-func max(x, y int) int {
-	if x > y {
-		return x
-	}
-
-	return y
 }
 
 func min(x, y int) int {
-	if x < y {
-		return x
+	if x > y {
+		return y
 	}
 
-	return y
+	return x
 }
