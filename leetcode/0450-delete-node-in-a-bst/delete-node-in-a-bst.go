@@ -1,5 +1,6 @@
 package prob0450
 
+import "github.com/allbuleyu/algorithms/kit"
 
 //https://leetcode.com/problems/delete-node-in-a-bst/description/
 //
@@ -48,97 +49,71 @@ package prob0450
  *     Right *TreeNode
  * }
  */
+type TreeNode = kit.TreeNode
+
 func deleteNode(root *TreeNode, key int) *TreeNode {
+	return helpFunc(root, key)
+}
+
+func helpFunc(root *TreeNode, key int) *TreeNode {
 	if root == nil {
 		return nil
 	}
 
-	x := bstSearch(root, key)
-
-	if x == nil {
-		return root
+	if root.Val > key {
+		root.Left = helpFunc(root.Left, key)
+	} else if root.Val < key {
+		root.Right = helpFunc(root.Right, key)
 	}
 
-	if x.Left == nil {
-		x = x.Right
-	}else if x.Right == nil {
-		x = x.Left
-	}else {
-		y := minimum(root.Right)
-		if y != x.Right {
-			y.Right = x.Right
-			y.Left = x.Left
-		}
-
-		x = y
+	if root.Left == nil {
+		return root.Right
+	} else if root.Right == nil {
+		return root.Left
 	}
 
-	// 如果删除的不是root直接关联的子孩子,那么root引用不会有变化
-	if x != root.Left && x != root.Right {
-		return root
+	x := min(root.Right)
+	x.Right = deleteMin(root.Right)
+	x.Left = root.Left
+
+	return x
+}
+
+func deleteMin(root *TreeNode) *TreeNode {
+	if root.Left == nil {
+		// right := root.Right
+		// root.Right = nil
+		// return right
+		return root.Right
 	}
 
-	
+	root.Left = deleteMin(root.Left)
 	return root
 }
 
-func  bstSearch(root *TreeNode, key int) *TreeNode {
-	if root == nil {
-		return nil
+func min(root *TreeNode) *TreeNode {
+	if root.Left == nil {
+		return root
 	}
 
-	var search *TreeNode
-
-	if root.Val < key {
-		search = bstSearch(root.Right, key)
-	}else if root.Val > key {
-		search = bstSearch(root.Left, key)
-	}else {
-		search = root
-	}
-
-	return search
+	return min(root.Left)
 }
 
-func bstSearch2(root *TreeNode, key int) *TreeNode {
-	search := root
-
-	for search != nil {
-		if search.Val < key {
-			search = search.Right
-		}else if search.Val > key {
-			search = search.Left
-		}else {
-			return search
-		}
-	}
-	
-	return nil
-}
-
-// 找到二叉搜索树 key的后继 
-func bstSuccessor(root *TreeNode, key int) *TreeNode {
-	return nil
-}
-
-func minimum(root *TreeNode) *TreeNode {
-	x := root
-	if root.Left != nil {
-		x = minimum(root.Left)
-	}
-
-	return x
-}
-
-func minimum1(root *TreeNode) *TreeNode {
-	var x *TreeNode
-	for {
-		if root.Left == nil {
+func deleteMinIteration(root *TreeNode) *TreeNode {
+	s := make([]*TreeNode, 1)
+	s[0] = root
+	for len(s) > 0 {
+		x := s[len(s)-1]
+		if x.Left == nil {
+			s[len(s)-1] = x.Right
 			break
 		}
-
-		x = root.Left
+		s = append(s, x.Left)
 	}
 
-	return x
+	for i := 1; i < len(s); i++ {
+		s[i-1].Left = s[i]
+	}
+
+	return s[0]
 }
