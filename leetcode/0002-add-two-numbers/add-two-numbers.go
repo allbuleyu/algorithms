@@ -1,6 +1,7 @@
 package prob0002
 
 import "github.com/allbuleyu/algorithms/kit"
+
 type ListNode = kit.ListNode
 
 /**
@@ -11,9 +12,44 @@ type ListNode = kit.ListNode
  * }
  */
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	return solutionOptimize(l1,l2)
+	//return solutionOptimize(l1, l2)
+	return recursion(l1, l2, 0)
 }
 
+func recursion(l1, l2 *ListNode, carry int) *ListNode {
+	if l1 != nil && l2 != nil {
+		l1.Val = l1.Val + l2.Val + carry
+		carry = l1.Val / 10
+		l1.Val %= 10
+
+		l1.Next = recursion(l1.Next, l2.Next, carry)
+		return l1
+	}
+
+	if l1 != nil {
+		l1.Val += carry
+		carry = l1.Val / 10
+		l1.Val %= 10
+
+		l1.Next = recursion(l1.Next, nil, carry)
+		return l1
+	}
+
+	if l2 != nil {
+		l2.Val += carry
+		carry = l2.Val / 10
+		l2.Val %= 10
+
+		l2.Next = recursion(l2.Next, nil, carry)
+		return l2
+	}
+
+	if carry == 1 {
+		return &ListNode{Val: 1}
+	}
+
+	return nil
+}
 
 // time 100%, space 100%
 func solutionOptimize(l1, l2 *ListNode) *ListNode {
@@ -23,10 +59,10 @@ func solutionOptimize(l1, l2 *ListNode) *ListNode {
 	for l2 != nil {
 		l1.Val += l2.Val + carry
 		carry = l1.Val / 10
-		l1.Val = l1.Val%10
+		l1.Val = l1.Val % 10
 
 		if l1.Next == nil && carry == 1 {
-			l1.Next = &ListNode{Val:0}
+			l1.Next = &ListNode{Val: 0}
 		}
 
 		l1 = l1.Next
@@ -35,11 +71,11 @@ func solutionOptimize(l1, l2 *ListNode) *ListNode {
 
 	for carry == 1 {
 		l1.Val += carry
-		carry = l1.Val/10
+		carry = l1.Val / 10
 		l1.Val %= 10
 
 		if carry == 1 {
-			l1.Next = &ListNode{Val:0}
+			l1.Next = &ListNode{Val: 0}
 		}
 
 		l1 = l1.Next
@@ -66,7 +102,7 @@ func solution1(l1, l2 *ListNode) *ListNode {
 
 		if sum >= 10 {
 			carry = 1
-		}else {
+		} else {
 			carry = 0
 		}
 
@@ -74,7 +110,6 @@ func solution1(l1, l2 *ListNode) *ListNode {
 		l1.Val = sum % 10
 
 		if l1.Next == nil {
-
 
 			// 在l2比l1长的情况下,让l1持续加长,
 			//当l2最后一个节点的时候,直接退出,才是正确结果
@@ -85,10 +120,8 @@ func solution1(l1, l2 *ListNode) *ListNode {
 			if l2 != nil && l2.Next == nil && carry == 0 {
 				break
 			}
-			l1.Next = &ListNode{Val:0,Next:nil}
+			l1.Next = &ListNode{Val: 0, Next: nil}
 		}
-
-
 
 		l1 = l1.Next
 
