@@ -12,7 +12,7 @@ type ListNode = kit.ListNode
  * }
  */
 func reverseKGroup(head *ListNode, k int) *ListNode {
-	return iterate(head, k)
+	return recursion1(head, k)
 }
 
 func iterate(head *ListNode, k int) *ListNode {
@@ -21,13 +21,13 @@ func iterate(head *ListNode, k int) *ListNode {
 	}
 	num := 0
 	cur := head
-	pre := &ListNode{Next:head}
+	pre := &ListNode{Next: head}
 
 	for cur != nil {
 		num++
 		cur = cur.Next
 
-		if num % k == 0 {
+		if num%k == 0 {
 			groupHead := pre.Next
 			newGroupHead := reverseNode(pre.Next, cur)
 			pre.Next = newGroupHead
@@ -45,7 +45,7 @@ func iterate(head *ListNode, k int) *ListNode {
 }
 
 func reverseNode(head *ListNode, end *ListNode) *ListNode {
-	pre := &ListNode{Next:nil}
+	pre := &ListNode{Next: nil}
 	for head != nil && head != end {
 		tmp := head
 		head = head.Next
@@ -74,9 +74,39 @@ func recursion(head *ListNode, k int) *ListNode {
 	if num == k {
 		newGroupHead := reverseNode(head, cur)
 
-		head.Next= recursion(cur, k)
+		head.Next = recursion(cur, k)
 		head = newGroupHead
 	}
 
 	return head
+}
+
+func recursion1(head *ListNode, k int) *ListNode {
+	if head == nil || k < 2 {
+		return head
+	}
+
+	cur := head
+	i := 0
+	for i < k && cur != nil {
+		cur = cur.Next
+		i++
+	}
+
+	if i < k {
+		return head
+	}
+
+	var rHead *ListNode
+	cur = head
+	for i = 0; i < k; i++ {
+		next := cur.Next
+		cur.Next = rHead
+		rHead = cur
+
+		cur = next
+	}
+	head.Next = recursion1(cur, k)
+
+	return rHead
 }

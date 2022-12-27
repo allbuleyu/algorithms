@@ -1,23 +1,24 @@
 package main
 
 import (
+	"bytes"
 	"flag"
 	"fmt"
-	"os/exec"
-	"strings"
-	"bytes"
 	"os"
+	"os/exec"
+
+	"strings"
 )
 
 var (
-	pkg = flag.String("p", "0", "pkg name:example -p=0001 package = prob0001")
+	pkg  = flag.String("p", "0", "pkg name:example -p=0001 package = prob0001")
 	name = flag.String("m", "", "file name")
 
 	// 主目录
 	base = "./leetcode"
 )
 
-func main()  {
+func main() {
 	flag.Parse()
 
 	if *pkg == "0" {
@@ -48,7 +49,7 @@ func main()  {
 
 	isExist := os.IsExist(err)
 	if isExist {
-		panic("file or dir has been existed")
+		panic(any("file or dir has been existed"))
 	}
 
 	if err != nil && !isExist {
@@ -56,17 +57,17 @@ func main()  {
 		return
 	}
 
-	pkgStr := fmt.Sprintf("package prob%s",*pkg)
+	pkgStr := fmt.Sprintf("package prob%s", *pkg)
 	fpath := fmt.Sprintf("%s/%s.go", dpath, *name)
-	ftPath :=fmt.Sprintf("%s/%s_test.go", dpath, *name)
+	ftPath := fmt.Sprintf("%s/%s_test.go", dpath, *name)
 	f, err := os.Create(fpath)
-	if err != nil  {
+	if err != nil {
 		fmt.Printf("mkdir err is %s \n", err)
 		return
 	}
 
 	ft, err := os.Create(ftPath)
-	if err != nil  {
+	if err != nil {
 		fmt.Printf("mkdir err is %s \n", err)
 		return
 	}
@@ -85,8 +86,6 @@ func main()  {
 		fmt.Println("cmd run fail, pls check err")
 		return
 	}
-
-
 
 	defer fmd.Close()
 	defer ft.Close()
