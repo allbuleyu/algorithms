@@ -4,20 +4,21 @@ import (
 	"github.com/allbuleyu/algorithms/kit"
 	"testing"
 
-	"github.com/stretchr/testify/assert"
 	"fmt"
+	"github.com/stretchr/testify/assert"
 )
 
-func Test_prb0014(t *testing.T)  {
+func Test_prb0014(t *testing.T) {
 	ast := assert.New(t)
 
 	// test case
-	tcs := []struct{
+	tcs := []struct {
 		input []int
-		v int
-		ans []int
+		v     int
+		ans   []int
 	}{
-		{[]int{1, 2, 3, 4, 5, 6}, 6, []int{1, 2,3,4,5}},
+		{[]int{1, 2, 3, 4, 5, 6}, 6, []int{1, 2, 3, 4, 5}},
+		{[]int{1, 2, 3, 4, 5, 6}, 1, []int{2, 3, 4, 5, 6}},
 		{[]int{1, 2, 6}, 6, []int{1, 2}},
 	}
 

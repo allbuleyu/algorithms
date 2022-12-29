@@ -1,5 +1,6 @@
 package prob0104
 
+import "github.com/allbuleyu/algorithms/kit"
 
 //https://leetcode.com/problems/maximum-depth-of-binary-tree/description/
 //Given a binary tree, find its maximum depth.
@@ -19,6 +20,8 @@ package prob0104
 //15   7
 //return its depth = 3.
 
+type TreeNode = kit.TreeNode
+
 /**
  * Definition for a binary tree node.
  * type TreeNode struct {
@@ -28,10 +31,19 @@ package prob0104
  * }
  */
 func maxDepth(root *TreeNode) int {
-	if root == nil{
+	if root == nil {
 		return 0
 	}
+	l := maxDepth(root.Left)
+	r := maxDepth(root.Right)
 
-	return max(maxDepth(root.Left), maxDepth(root.Right))
+	return max(l, r) + 1
 }
 
+func max(x, y int) int {
+	if x > y {
+		return x
+	}
+
+	return y
+}

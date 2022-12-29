@@ -27,6 +27,7 @@ func randomQuickSort(nums []int, lo, hi int) {
 }
 
 func quickSort(nums []int, lo, hi int) {
+	// 这里的条件只能是hi <= lo, 通过长度为1 的数组来模拟,可得出结论.
 	if hi <= lo {
 		return
 	}
@@ -46,6 +47,18 @@ func partition(nums []int, lo, hi int) int {
 			swap(nums, i, j)
 		}
 	}
+
+	// 为什么不用这个,因为这样i,k的距离就会非常远,
+	// 很可能会用不到高速缓存.
+	//k := j - 1
+	//for i < k {
+	//	if nums[i] <= x {
+	//		i++
+	//	} else {
+	//		swap(nums, i, k)
+	//		k--
+	//	}
+	//}
 
 	swap(nums, i+1, hi)
 	return i + 1
