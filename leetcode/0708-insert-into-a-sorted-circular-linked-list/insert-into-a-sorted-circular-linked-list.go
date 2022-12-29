@@ -1,6 +1,6 @@
 package prob0708
 
-import "github.com/allbuleyu/algorithms/kit"
+import "algorithms/kit"
 
 type Node = kit.ListNode
 /**

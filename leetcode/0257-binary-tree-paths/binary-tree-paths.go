@@ -1,7 +1,7 @@
 package prob0257
 
 import (
-	"github.com/allbuleyu/algorithms/kit"
+	"algorithms/kit"
 	"strconv"
 )
 

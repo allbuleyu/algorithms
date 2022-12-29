@@ -1,7 +1,7 @@
 package prob0024
 
 import (
-	"github.com/allbuleyu/algorithms/kit"
+	"algorithms/kit"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

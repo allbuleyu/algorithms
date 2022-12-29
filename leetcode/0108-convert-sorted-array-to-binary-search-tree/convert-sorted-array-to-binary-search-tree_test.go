@@ -2,7 +2,7 @@ package prob0108
 
 import (
 	"fmt"
-	"github.com/allbuleyu/algorithms/kit"
+	"algorithms/kit"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

@@ -1,6 +1,6 @@
 package prob0083
 
-import "github.com/allbuleyu/algorithms/kit"
+import "algorithms/kit"
 
 /**
  * Definition for singly-linked list.

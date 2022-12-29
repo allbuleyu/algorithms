@@ -1,5 +1,8 @@
 package prob0102
 
+import "algorithms/kit"
+
+type TreeNode = kit.TreeNode
 
 /*
  * https://leetcode.com/problems/binary-tree-level-order-traversal/description/
