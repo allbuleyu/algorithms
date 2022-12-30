@@ -1,7 +1,7 @@
 package prob0206
 
 import (
-	"github.com/allbuleyu/algorithms/kit"
+	"algorithms/kit"
 	"testing"
 
 	"fmt"

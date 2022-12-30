@@ -2,7 +2,7 @@ package prob0297
 
 import (
 	"bytes"
-	"github.com/allbuleyu/algorithms/kit"
+	"algorithms/kit"
 	"strconv"
 	"strings"
 )

@@ -1,6 +1,6 @@
 package prob0236
 
-import "github.com/allbuleyu/algorithms/kit"
+import "algorithms/kit"
 
 type TreeNode = kit.TreeNode
 /**

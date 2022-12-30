@@ -2,7 +2,6 @@ package prob0102
 
 import (
 	"fmt"
-	"github.com/aQuaYi/LeetCode-in-Go/kit"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -33,6 +32,6 @@ func Test_Problem0102(t *testing.T) {
 	for _, tc := range tcs {
 		fmt.Printf("~~%v~~\n", tc)
 
-		ast.Equal(tc.ans, levelOrder(kit.PreIn2Tree(tc.pre, tc.in)), "输入:%v", tc)
+		ast.Equal(tc.ans, levelOrder(nil), "输入:%v", tc)
 	}
 }

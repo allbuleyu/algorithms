@@ -1,6 +1,6 @@
 package prob0450
 
-import "github.com/allbuleyu/algorithms/kit"
+import "algorithms/kit"
 
 //https://leetcode.com/problems/delete-node-in-a-bst/description/
 //

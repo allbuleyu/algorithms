@@ -1,7 +1,7 @@
 package prob0988
 
 import (
-	"github.com/allbuleyu/algorithms/kit"
+	"algorithms/kit"
 )
 
 type TreeNode = kit.TreeNode

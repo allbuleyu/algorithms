@@ -1,6 +1,6 @@
 package prob0095
 
-import "github.com/allbuleyu/algorithms/kit"
+import "algorithms/kit"
 
 type TreeNode = kit.TreeNode
 
@@ -18,10 +18,6 @@ func generateTrees(n int) []*TreeNode {
 }
 
 func recursion(start, end int) []*TreeNode {
-	if start > end {
-		return nil
-	}
-
 	nodes := make([]*TreeNode, 0)
 	for i := start; i <= end; i++ {
 		left := recursion(start, i-1)

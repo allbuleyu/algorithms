@@ -3,7 +3,7 @@ package prob0328
 
 import (
 	"fmt"
-	"github.com/allbuleyu/algorithms/kit"
+	"algorithms/kit"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
