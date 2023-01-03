@@ -10,14 +10,14 @@ func Test_searchMatrix(t *testing.T) {
 	ast := assert.New(t)
 
 	// test case
-	tcs := []struct{
-		input [][]int
+	tcs := []struct {
+		input  [][]int
 		target int
-		ans bool
+		ans    bool
 	}{
 		{
 			[][]int{
-				[]int{-1,3},
+				[]int{-1, 3},
 
 				//[]int{7,8,9,10,30},
 
@@ -25,8 +25,8 @@ func Test_searchMatrix(t *testing.T) {
 		},
 		{
 			[][]int{
-				[]int{1,2},
-				[]int{2,30},
+				[]int{1, 2},
+				[]int{2, 30},
 
 				//[]int{7,8,9,10,30},
 
@@ -34,28 +34,36 @@ func Test_searchMatrix(t *testing.T) {
 		},
 		{
 			[][]int{
-				[]int{1,   4,  7, 11, 15},
-				[]int{2,   5,  8, 12, 19},
-				[]int{3,   6,  9, 16, 22},
+				[]int{1, 4, 7, 11, 15},
+				[]int{2, 5, 8, 12, 19},
+				[]int{3, 6, 9, 16, 22},
 				[]int{10, 13, 14, 17, 24},
 				[]int{18, 21, 23, 26, 30},
 			}, 30, true,
 		},
 		{
 			[][]int{
-				[]int{1,   4,  7, 11, 15},
-				[]int{2,   5,  8, 12, 19},
-				[]int{3,   6,  9, 16, 22},
+				[]int{1, 4, 7, 11, 15},
+				[]int{2, 5, 8, 12, 19},
+				[]int{3, 6, 9, 16, 22},
 				[]int{10, 13, 14, 17, 24},
 				[]int{18, 21, 23, 26, 30},
 			}, 22, true,
 		},
-
+		{
+			[][]int{
+				[]int{1, 4, 7, 11, 15},
+				[]int{2, 5, 8, 12, 19},
+				[]int{3, 6, 9, 16, 22},
+				[]int{10, 13, 14, 17, 24},
+				[]int{18, 21, 23, 26, 30},
+			}, 31, false,
+		},
 	}
 
 	for _, tc := range tcs {
 		fmt.Printf("~~%v~~\n", tc)
 
-		ast.Equal(tc.ans, searchMatrix(tc.input, tc.target), "输入:%v", tc)
+		ast.Equal(tc.ans, helpDacDfsBinarySearch(tc.input, tc.target), "输入:%v", tc)
 	}
 }

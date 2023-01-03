@@ -4,6 +4,8 @@ func isMatch(s string, p string) bool {
 	return recursionOfficial(s, p)
 }
 
+// todo
+//
 //	if (pattern.length() >= 2 && pattern.charAt(1) == '*'){
 //	           return (isMatch(text, pattern.substring(2)) ||
 //	                   (first_match && isMatch(text.substring(1), pattern)));

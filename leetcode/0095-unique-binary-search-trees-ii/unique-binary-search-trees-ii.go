@@ -12,25 +12,26 @@ type TreeNode = kit.TreeNode
  *     Right *TreeNode
  * }
  */
+
 func generateTrees(n int) []*TreeNode {
-	return help(0, n)
+
+	return recursion(1, n)
 }
 
-func help(start, end int) []*TreeNode {
+func recursion(start, end int) []*TreeNode {
 	if start > end {
-		return nil
+		return []*TreeNode{nil}
 	}
 
 	nodes := make([]*TreeNode, 0)
-	for i := start; i <= end; i++ {
-		left := help(start, i-1)
-		right := help(i+1, end)
+	for i := start; i < end; i++ {
+		left, right := recursion(start, i-1), recursion(i+1, end)
+		for _, l := range left {
+			for _, r := range right {
+				node := &TreeNode{Val: i, Left: l, Right: r}
+				nodes = append(nodes, node)
 
-		node := &TreeNode{Val: i}
-
-		if len(left) == 0 && len(right) == 0 {
-			nodes = append(nodes, node)
-			return nodes
+			}
 		}
 
 	}

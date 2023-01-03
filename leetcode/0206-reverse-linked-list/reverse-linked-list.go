@@ -3,6 +3,7 @@ package prob0206
 import "algorithms/kit"
 
 type ListNode = kit.ListNode
+
 /**
  * Definition for singly-linked list.
  * type ListNode struct {
@@ -11,13 +12,28 @@ type ListNode = kit.ListNode
  * }
  */
 func reverseList(head *ListNode) *ListNode {
+	//dummy := &ListNode{}
+	//helpRecursionUpDown(head, dummy)
+	//return dummy.Next
 	dummy := &ListNode{}
-	helpRecursionDownUp(head, dummy)
+	recursion(head, dummy)
 	return dummy.Next
 }
 
+func recursion(head, dummy *ListNode) *ListNode {
+	if head == nil {
+		return head
+	}
+
+	next := head.Next
+	head.Next = dummy.Next
+	dummy.Next = head
+
+	return recursion(next, dummy)
+}
+
 func helpIteration(head *ListNode) *ListNode {
-	dummy := &ListNode{Next:nil}
+	dummy := &ListNode{Next: nil}
 
 	for head != nil {
 		tmp := head.Next
