@@ -49,3 +49,34 @@ func merge(nums []int, lo, mid, hi int) {
 		}
 	}
 }
+
+func mergeSortTopDown(nums []int) {
+	helpMergeSortTopDown(nums, 0, len(nums)-1)
+}
+
+func helpMergeSortTopDown(nums []int, start, end int) {
+	if start == end {
+		return
+	}
+
+	mid := (end-start)/2 + start
+	helpMergeSortTopDown(nums, start, mid)
+	helpMergeSortTopDown(nums, mid+1, end)
+
+	combine(nums, start, mid, end)
+}
+
+func combine(nums []int, i, j, k int) {
+	for j <= k {
+		if nums[i] <= nums[j] {
+			if i == j {
+				i++
+			}
+			j++
+		} else {
+			swap(nums, i, j)
+			i++
+			j++
+		}
+	}
+}
