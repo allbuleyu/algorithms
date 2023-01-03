@@ -14,6 +14,7 @@ type TreeNode = kit.TreeNode
  */
 
 func generateTrees(n int) []*TreeNode {
+
 	return recursion(1, n)
 }
 
