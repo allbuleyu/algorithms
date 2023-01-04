@@ -1,28 +1,30 @@
 package prob0022
 
-func generateParenthesis(n int) []string {
-	ans := make([]string, 0)
-	cur := make([]byte, 0)
-	backtrack(n, &ans, &cur, 0, 0)
+var ps []string
+var cache []byte
 
-	return ans
+func generateParenthesis(n int) []string {
+	ps = make([]string, 0)
+	cache = make([]byte, 0, n)
+	backtrack(n, n, n)
+	return ps
 }
 
-func backtrack(n int, ans *[]string, cur *[]byte, open, closed int) {
-	if 2*n == len(*cur) {
-		*ans = append(*ans, string(*cur))
+func backtrack(n, open, close int) {
+	if close == 0 {
+		ps = append(ps, string(cache))
+		return
 	}
 
-	if open < n {
-		*cur = append(*cur, '(')
-		backtrack(n, ans, cur, open+1, closed)
-
-		*cur = (*cur)[:len(*cur)-1]
+	if open > 0 {
+		cache = append(cache, '(')
+		backtrack(n, open-1, close)
+		cache = cache[:len(cache)-1]
 	}
 
-	if closed < open {
-		*cur = append(*cur, ')')
-		backtrack(n, ans, cur, open, closed+1)
-		*cur = (*cur)[:len(*cur)-1]
+	if close > open {
+		cache = append(cache, ')')
+		backtrack(n, open, close-1)
+		cache = cache[:len(cache)-1]
 	}
 }
