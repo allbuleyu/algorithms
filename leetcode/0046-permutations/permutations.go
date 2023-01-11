@@ -1,8 +1,40 @@
 package prob0046
 
+var permutes [][]int
+var cache []int
+var used []bool
 
 func permute(nums []int) [][]int {
-	return recursion(nums)
+	helpBacktrackx(nums)
+	return permutes
+}
+
+func helpBacktrackx(nums []int) {
+	permutes = make([][]int, 0)
+	cache = make([]int, 0)
+	used = make([]bool, len(nums))
+	backtrackx(nums)
+}
+
+func backtrackx(nums []int) {
+	if len(cache) == len(nums) {
+		tmp := make([]int, len(nums))
+		copy(tmp, cache)
+		permutes = append(permutes, tmp)
+		return
+	}
+
+	for i := 0; i < len(nums); i++ {
+		if used[i] {
+			continue
+		}
+
+		cache = append(cache, nums[i])
+		used[i] = true
+		backtrackx(nums)
+		used[i] = false
+		cache = cache[:len(cache)-1]
+	}
 }
 
 func recursion(nums []int) [][]int {
@@ -44,7 +76,7 @@ func helpRecursion(res *[][]int, nums []int, cur *[]int) {
 
 		// t := *cur	导致结果都为最后一次执行的结果,找一下原因
 		*res = append(*res, t)
-	}else {
+	} else {
 		for i := 0; i < len(nums); i++ {
 			if contains(*cur, nums[i]) {
 				continue
@@ -65,5 +97,3 @@ func contains(nums []int, num int) bool {
 
 	return false
 }
-
-

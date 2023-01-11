@@ -188,11 +188,110 @@ func priorityQueue(buildings [][]int) [][]int {
 	})
 
 	pq := make([][]int, 0)
-	for _, edge := range edges {
-		if len(pq) == 0 {
-			res = append(res, []int{edge[0], buildings[edge[1]][2]})
+	for i, edge := range edges {
+		curX := edge[0]
+
+		for i < len(edges) && edges[i][0] == curX {
+			b := edges[i][1]
+
+			if buildings[b][0] == curX {
+				right, height := buildings[b][1], buildings[b][2]
+
+				pq = append(pq, []int{height, right})
+			}
+			i++
 		}
 
+		for len(pq) > 0 && pq[len(pq)-1][1] <= curX {
+			pq = pq[:len(pq)-1]
+		}
+
+		curHeight := 0
+		if len(pq) > 0 {
+			curHeight = pq[len(pq)-1][0]
+		}
+
+		if len(res) == 0 || res[len(res)-1][1] <= curX {
+			res = append(res, []int{curX, curHeight})
+		}
+	}
+
+	return res
+}
+
+func helpDivideAndConquer(buildings [][]int) [][]int {
+	//sort.Slice(buildings, func(i, j int) bool {
+	//	if buildings[i][0] < buildings[j][0] {
+	//		return true
+	//	}
+	//
+	//	return buildings[i][1] < buildings[j][1]
+	//})
+
+	return divideAndConquer(buildings, 0, len(buildings)-1)
+}
+
+func divideAndConquer(buildings [][]int, left, right int) [][]int {
+	if len(buildings) == 0 {
+		return [][]int{}
+	}
+
+	if left == right {
+		l, r, height := buildings[left][0], buildings[left][1], buildings[left][2]
+		return [][]int{{l, height}, {r, 0}}
+	}
+
+	mid := left + (right-left)/2
+	subLeft := divideAndConquer(buildings, left, mid)
+	subRight := divideAndConquer(buildings, mid+1, right)
+
+	return merge(subLeft, subRight)
+}
+
+func merge(leftSkyline, rightSkyline [][]int) [][]int {
+	var leftPos, rightPos int
+	var leftPrevHeight, rightPrevHeight int
+	var curX, curY int
+	var res [][]int
+
+	for leftPos < len(leftSkyline) && rightPos < len(rightSkyline) {
+		nextLeftX, nextRightX := leftSkyline[leftPos][0], rightSkyline[rightPos][0]
+
+		if nextLeftX < nextRightX {
+			leftPrevHeight = leftSkyline[leftPos][1]
+
+			curX = nextLeftX
+			curY = max(leftPrevHeight, rightPrevHeight)
+			leftPos++
+		} else if nextLeftX > nextRightX {
+			rightPrevHeight = rightSkyline[rightPos][1]
+
+			curX = nextRightX
+			curY = max(leftPrevHeight, rightPrevHeight)
+			rightPos++
+		} else {
+			leftPrevHeight = leftSkyline[leftPos][1]
+			rightPrevHeight = rightSkyline[rightPos][1]
+
+			curX = nextRightX
+			curY = max(leftPrevHeight, rightPrevHeight)
+			leftPos++
+			rightPos++
+		}
+
+		if len(res) == 0 || res[len(res)-1][1] != curY {
+			res = append(res, []int{curX, curY})
+		}
+	}
+
+	for leftPos < len(leftSkyline) {
+		res = append(res, leftSkyline[leftPos])
+		leftPos++
+	}
+
+	for rightPos < len(rightSkyline) {
+		res = append(res, rightSkyline[rightPos])
+		rightPos++
 	}
 
 	return res
