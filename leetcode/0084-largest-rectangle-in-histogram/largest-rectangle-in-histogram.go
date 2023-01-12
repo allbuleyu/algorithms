@@ -44,7 +44,42 @@ func largestRectangleAreaOld(heights []int) int {
 	return maxArea
 }
 
+// worst cast n^2 不会通过
+// todo: https://leetcode.com/problems/largest-rectangle-in-histogram/solutions/28941/segment-tree-solution-just-another-idea-onlogn-solution/ 用线段树(Segment Tree)可以把时间降到NlogN
+func helpDivideAndConquer(heights []int) int {
+	if len(heights) == 0 {
+		return 0
+	}
+
+	return divideAndConquer(heights, 0, len(heights)-1)
+}
+
+func divideAndConquer(heights []int, l, r int) int {
+	if l > r {
+		return 0
+	}
+
+	if l == r {
+		return heights[l]
+	}
+
+	i := l + 1
+	minIndex := l
+	for ; i <= r; i++ {
+		if heights[i] < heights[minIndex] {
+			minIndex = i
+		}
+	}
+
+	curArea := heights[minIndex] * (r - l + 1)
+	leftArea := divideAndConquer(heights, l, minIndex-1)
+	rightArea := divideAndConquer(heights, minIndex+1, r)
+
+	return max(curArea, max(leftArea, rightArea))
+}
+
 // stack 代表单调栈,最后一个元素出栈了,代表了到达当前的floor,所以要乘以 当前遍历到的位置i.
+// todo: 边界条件还是没精通,需要再继续理解
 func withStack(heights []int) int {
 	stack := make([]int, 0)
 	maxArea := 0
@@ -78,6 +113,7 @@ func withStack(heights []int) int {
 	return maxArea
 }
 
+// intuition one.
 func bruteForce(heights []int) int {
 	maxArea := 0
 	for i := 0; i < len(heights); i++ {

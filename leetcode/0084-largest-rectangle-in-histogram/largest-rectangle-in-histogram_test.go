@@ -24,7 +24,7 @@ func Test_largestRectangleAreaOld(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := withStack(tt.args); got != tt.want {
+			if got := helpDivideAndConquer(tt.args); got != tt.want {
 				t.Errorf("largestRectangleAreaOld() = %v, want %v", got, tt.want)
 			}
 		})

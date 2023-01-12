@@ -14,12 +14,10 @@ func dynamicProgramming(cost []int) int {
 	return min(f1, f2)
 }
 
-// todo
 func recursion(cost []int) int {
 
 	return 0
 }
-
 
 func min(a, b int) int {
 	if a > b {
