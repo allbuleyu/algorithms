@@ -29,3 +29,33 @@ func Test_maximumScore(t *testing.T) {
 		})
 	}
 }
+
+func Test_Array(t *testing.T) {
+	arr := newArrAndReturun(t)
+	arrPointer := newArrAndReturunPointer(t)
+
+	t.Logf("external func arr pointer:%p", &arr)
+	t.Logf("external func arrPointer pointer:%p", arrPointer)
+}
+
+func newArrAndReturun(t *testing.T) []int {
+	n := 10
+	res := make([]int, n)
+	for i := 0; i < n; i++ {
+		res[i] = i
+	}
+
+	t.Logf("internal func arr pointer:%p", &res)
+	return res
+}
+
+func newArrAndReturunPointer(t *testing.T) *[]int {
+	n := 10
+	res := make([]int, n)
+	for i := 0; i < n; i++ {
+		res[i] = i
+	}
+
+	t.Logf("internal func arrPointer pointer:%p", &res)
+	return &res
+}
