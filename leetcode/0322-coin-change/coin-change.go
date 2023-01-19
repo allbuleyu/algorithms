@@ -4,6 +4,10 @@ func coinChange(coins []int, amount int) int {
 	return helpTopDown(coins, amount)
 }
 
+func bottomUp(coins []int, amount int) int {
+	return 0
+}
+
 var memory []int
 var maxVal = 1 << 31
 
