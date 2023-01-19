@@ -5,18 +5,20 @@ func maximumScore(nums []int, multipliers []int) int {
 }
 
 func helper(nums, muls []int) int {
-	return f1(nums, muls, 0, len(nums)-1, 0)
+	return upDown(nums, muls, 0, 0)
 }
 
-func f1(nums, muls []int, l, r, i int) int {
+func upDown(nums, muls []int, l, i int) int {
 	if i == len(muls) {
 		return 0
 	}
 
-	resLeft := f1(nums, muls, l+1, r, i+1)
-	resRight := f1(nums, muls, l, r-1, i+1)
+	n := len(nums)
 
-	xl, xr := nums[l]*muls[i], nums[r]*muls[i]
+	resLeft := upDown(nums, muls, l+1, i+1)
+	resRight := upDown(nums, muls, l, i+1)
+
+	xl, xr := nums[l]*muls[i], nums[n-1-(i-l)]*muls[i]
 
 	return max(resLeft+xl, resRight+xr)
 }
