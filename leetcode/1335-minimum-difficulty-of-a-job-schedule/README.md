@@ -1,0 +1,1 @@
+# [1335-minimum-difficulty-of-a-job-schedule](https://leetcode.com/problems/minimum-difficulty-of-a-job-schedule)
