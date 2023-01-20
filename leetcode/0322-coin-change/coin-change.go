@@ -1,11 +1,28 @@
 package prob0322
 
 func coinChange(coins []int, amount int) int {
-	return helpTopDown(coins, amount)
+	return bottomUp(coins, amount)
 }
 
 func bottomUp(coins []int, amount int) int {
-	return 0
+	dp := make([]int, amount+1)
+	for i := 1; i <= amount; i++ {
+		dp[i] = maxVal
+	}
+
+	for i := 1; i <= amount; i++ {
+		for j := 0; j < len(coins); j++ {
+			if i >= coins[j] {
+				dp[i] = min(dp[i], dp[i-coins[j]]+1)
+			}
+		}
+	}
+
+	if dp[amount] == maxVal {
+		return -1
+	}
+
+	return dp[amount]
 }
 
 var memory []int
@@ -57,6 +74,14 @@ func topDown(coins []int, amount int) int {
 
 func min(x, y int) int {
 	if x < y {
+		return x
+	}
+
+	return y
+}
+
+func max(x, y int) int {
+	if x > y {
 		return x
 	}
 
