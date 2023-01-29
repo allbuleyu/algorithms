@@ -1,5 +1,6 @@
 package prob0139
 
+// 还有一种解法,前缀数,不过懒得写了.记录一下
 func wordBreak(s string, wordDict []string) bool {
 	return bottomUp(s, wordDict)
 }

@@ -1,6 +1,9 @@
 package prob0256
 
-import "math"
+import (
+	"fmt"
+	"math"
+)
 
 var gCosts [][]int
 var hs map[string]int
@@ -9,10 +12,9 @@ func minCost(costs [][]int) int {
 	gCosts = costs
 
 	hs = make(map[string]int)
-	return helpDpTopDown(0,-1,0)
+	return helpDpTopDown(0, -1, 0)
 	// return bruteForce(0, -1, 0)
 }
-
 
 func helpDpTopDown(row, color, sum int) int {
 	if row == len(gCosts) {
