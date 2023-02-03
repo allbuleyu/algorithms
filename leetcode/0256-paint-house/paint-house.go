@@ -5,18 +5,32 @@ import (
 	"math"
 )
 
+func minCost(costs [][]int) int {
+	return bottomUp(costs)
+}
+
+func bottomUp(costs [][]int) int {
+	var r, b, g int
+
+	for i := 0; i < len(costs); i++ {
+		c := costs[i]
+		r, b, g = min(b, g)+c[0], min(r, g)+c[1], min(r, b)+c[2]
+	}
+
+	return min(r, min(b, g))
+}
+
 var gCosts [][]int
 var hs map[string]int
 
-func minCost(costs [][]int) int {
+func helpTopDown(costs [][]int) int {
 	gCosts = costs
 
 	hs = make(map[string]int)
-	return helpDpTopDown(0, -1, 0)
-	// return bruteForce(0, -1, 0)
+	return topDown(0, -1, 0)
 }
 
-func helpDpTopDown(row, color, sum int) int {
+func topDown(row, color, sum int) int {
 	if row == len(gCosts) {
 		return sum
 	}
@@ -32,7 +46,7 @@ func helpDpTopDown(row, color, sum int) int {
 			continue
 		}
 
-		ans = min(ans, helpDpTopDown(row+1, i, sum+gCosts[row][i]))
+		ans = min(ans, topDown(row+1, i, sum+gCosts[row][i]))
 	}
 	hs[hKey] = ans
 
