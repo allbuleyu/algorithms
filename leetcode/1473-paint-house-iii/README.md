@@ -1,0 +1,1 @@
+# [1473-paint-house-iii](https://leetcode.com/problems/paint-house-iii)
