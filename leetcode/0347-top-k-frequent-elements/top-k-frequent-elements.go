@@ -1,14 +1,14 @@
 package prob0347
 
-//https://leetcode.com/problems/top-k-frequent-elements/
-//Given a non-empty array of integers, return the k most frequent elements.
+// https://leetcode.com/problems/top-k-frequent-elements/
+// Given a non-empty array of integers, return the k most frequent elements.
 //
-//For example,
-//Given [1,1,1,2,2,3] and k = 2, return [1,2].
+// For example,
+// Given [1,1,1,2,2,3] and k = 2, return [1,2].
 //
-//Note:
-//You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
-//Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
+// Note:
+// You may assume k is always valid, 1 ≤ k ≤ number of unique elements.
+// Your algorithm's time complexity must be better than O(n log n), where n is the array's size.
 // next challenge 192(bash), 215,659,692
 func topKFrequent(nums []int, k int) []int {
 	m := make(map[int]int)
@@ -25,7 +25,7 @@ func topKFrequent(nums []int, k int) []int {
 	}
 
 	r := make([]int, 0, k)
-	for i := len(fr)-1; i >= 0; i-- {
+	for i := len(fr) - 1; i >= 0; i-- {
 		if len(fr[i]) == 0 {
 			continue
 		}
@@ -37,9 +37,4 @@ func topKFrequent(nums []int, k int) []int {
 	}
 
 	return r
-}
-
-
-func TopKFrequent(nums []int, k int) []int {
-	return topKFrequent(nums, k)
 }
