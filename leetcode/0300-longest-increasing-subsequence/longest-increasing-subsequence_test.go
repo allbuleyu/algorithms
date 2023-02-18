@@ -15,6 +15,8 @@ func Test_lengthOfLIS(t *testing.T) {
 		{"x1", args{[]int{0, 1, 2, 3}}, 4},
 		{"x2", args{[]int{0, 0, 0, 0}}, 1},
 		{"x3", args{[]int{7, 6, 5, 4}}, 1},
+		{"x3", args{[]int{2, 5, 1, 4}}, 2},
+		{"x3", args{[]int{2, 5, 3, 4}}, 3},
 		{"x3", args{[]int{0}}, 1},
 	}
 	for _, tt := range tests {

@@ -1,0 +1,1 @@
+# [1935-maximum-number-of-words-you-can-type](https://leetcode.com/problems/maximum-number-of-words-you-can-type)
