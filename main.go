@@ -58,8 +58,8 @@ func main() {
 	}
 
 	pkgStr := fmt.Sprintf("package prob%s", *pkg)
-	fpath := fmt.Sprintf("%s/%s.go", dpath, *name)
-	ftPath := fmt.Sprintf("%s/%s_test.go", dpath, *name)
+	fpath := fmt.Sprintf("%s/%s.go", dpath, *pkg)
+	ftPath := fmt.Sprintf("%s/%s_test.go", dpath, *pkg)
 	f, err := os.Create(fpath)
 	if err != nil {
 		fmt.Printf("mkdir err is %s \n", err)
